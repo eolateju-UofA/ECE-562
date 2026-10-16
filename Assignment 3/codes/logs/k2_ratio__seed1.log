@@ -1,0 +1,147 @@
+Update 1/146 | Step 2048 | Train 14 | KL end 2.6018 | Clipfrac end 0.94
+Update 2/146 | Step 4096 | Train 103 | KL end 3.4323 | Clipfrac end 0.96
+Update 3/146 | Step 6144 | Train 124 | KL end 4.0707 | Clipfrac end 0.97
+Update 4/146 | Step 8192 | Train 152 | KL end 1.4237 | Clipfrac end 0.90
+Update 5/146 | Step 10240 | Train 36 | Eval 202 | KL end 0.2296 | Clipfrac end 0.75
+Update 6/146 | Step 12288 | Train 105 | KL end 0.8902 | Clipfrac end 0.87
+Update 7/146 | Step 14336 | Train 62 | KL end 1.5142 | Clipfrac end 0.91
+Update 8/146 | Step 16384 | Train 60 | KL end 0.5921 | Clipfrac end 0.83
+Update 9/146 | Step 18432 | Train 68 | KL end 3.0989 | Clipfrac end 0.95
+Update 10/146 | Step 20480 | Train 71 | Eval 29 | KL end 4.8681 | Clipfrac end 0.98
+Update 11/146 | Step 22528 | Train 24 | KL end 4.9207 | Clipfrac end 0.98
+Update 12/146 | Step 24576 | Train 48 | KL end 10.2902 | Clipfrac end 0.98
+Update 13/146 | Step 26624 | Train 132 | KL end 11.5536 | Clipfrac end 0.98
+Update 14/146 | Step 28672 | Train 105 | KL end 4.3467 | Clipfrac end 0.97
+Update 15/146 | Step 30720 | Train 152 | Eval 109 | KL end 4.4613 | Clipfrac end 0.97
+Update 16/146 | Step 32768 | Train 115 | KL end 12.3274 | Clipfrac end 0.98
+Update 17/146 | Step 34816 | Train 93 | KL end 6.1012 | Clipfrac end 0.99
+Update 18/146 | Step 36864 | Train 109 | KL end 17.0480 | Clipfrac end 0.98
+Update 19/146 | Step 38912 | Train 52 | KL end 8.7649 | Clipfrac end 0.98
+Update 20/146 | Step 40960 | Train 61 | Eval 46 | KL end 7.4659 | Clipfrac end 0.98
+Update 21/146 | Step 43008 | Train 46 | KL end 1.2991 | Clipfrac end 0.84
+Update 22/146 | Step 45056 | Train 49 | KL end 6.8283 | Clipfrac end 0.94
+Update 23/146 | Step 47104 | Train 56 | KL end 8.5111 | Clipfrac end 0.97
+Update 24/146 | Step 49152 | Train 122 | KL end 11.9704 | Clipfrac end 0.96
+Update 25/146 | Step 51200 | Train 115 | Eval 13 | KL end 8.5022 | Clipfrac end 0.97
+Update 26/146 | Step 53248 | Train 67 | KL end 4.1451 | Clipfrac end 0.94
+Update 27/146 | Step 55296 | Train 4 | KL end 2.7925 | Clipfrac end 0.96
+Update 28/146 | Step 57344 | Train 27 | KL end 3.3232 | Clipfrac end 0.94
+Update 29/146 | Step 59392 | Train 103 | KL end 36.2187 | Clipfrac end 1.00
+Update 30/146 | Step 61440 | Train 47 | Eval 44 | KL end 20.1539 | Clipfrac end 1.00
+Update 31/146 | Step 63488 | Train 44 | KL end 10.5171 | Clipfrac end 0.99
+Update 32/146 | Step 65536 | Train 58 | KL end 13.6081 | Clipfrac end 0.99
+Update 33/146 | Step 67584 | Train 68 | KL end 5.7236 | Clipfrac end 0.96
+Update 34/146 | Step 69632 | Train 79 | KL end 6.5442 | Clipfrac end 0.96
+Update 35/146 | Step 71680 | Train 70 | Eval 102 | KL end 5.5864 | Clipfrac end 0.97
+Update 36/146 | Step 73728 | Train 103 | KL end 12.3373 | Clipfrac end 0.98
+Update 37/146 | Step 75776 | Train 108 | KL end 4.3973 | Clipfrac end 0.96
+Update 38/146 | Step 77824 | Train 86 | KL end 8.3783 | Clipfrac end 0.98
+Update 39/146 | Step 79872 | Train 88 | KL end 7.3556 | Clipfrac end 0.96
+Update 40/146 | Step 81920 | Train 96 | Eval 92 | KL end 7.9379 | Clipfrac end 0.96
+Update 41/146 | Step 83968 | Train 93 | KL end 8.1458 | Clipfrac end 0.97
+Update 42/146 | Step 86016 | Train 93 | KL end 11.9970 | Clipfrac end 0.98
+Update 43/146 | Step 88064 | Train 99 | KL end 4.7083 | Clipfrac end 0.96
+Update 44/146 | Step 90112 | Train 129 | KL end 8.2397 | Clipfrac end 0.98
+Update 45/146 | Step 92160 | Train 14 | Eval 9 | KL end 8.6391 | Clipfrac end 0.98
+Update 46/146 | Step 94208 | Train 9 | KL end 5.0052 | Clipfrac end 0.97
+Update 47/146 | Step 96256 | Train 10 | KL end 7.3555 | Clipfrac end 0.97
+Update 48/146 | Step 98304 | Train 29 | KL end 53.6578 | Clipfrac end 1.00
+Update 49/146 | Step 100352 | Train 44 | KL end 42.2500 | Clipfrac end 1.00
+Update 50/146 | Step 102400 | Train 44 | Eval 101 | KL end 7.5926 | Clipfrac end 0.94
+Update 51/146 | Step 104448 | Train 81 | KL end 4.5115 | Clipfrac end 0.95
+Update 52/146 | Step 106496 | Train 126 | KL end 11.1352 | Clipfrac end 0.95
+Update 53/146 | Step 108544 | Train 72 | KL end 7.5182 | Clipfrac end 0.98
+Update 54/146 | Step 110592 | Train 67 | KL end 5.5843 | Clipfrac end 0.97
+Update 55/146 | Step 112640 | Train 69 | Eval 100 | KL end 9.3633 | Clipfrac end 0.94
+Update 56/146 | Step 114688 | Train 106 | KL end 4.3692 | Clipfrac end 0.97
+Update 57/146 | Step 116736 | Train 86 | KL end 7.8304 | Clipfrac end 0.98
+Update 58/146 | Step 118784 | Train 48 | KL end 8.5455 | Clipfrac end 0.99
+Update 59/146 | Step 120832 | Train 200 | KL end 7.7029 | Clipfrac end 0.98
+Update 60/146 | Step 122880 | Train 48 | Eval 166 | KL end 290.0728 | Clipfrac end 0.98
+Update 61/146 | Step 124928 | Train 188 | KL end 3.4328 | Clipfrac end 0.95
+Update 62/146 | Step 126976 | Train 132 | KL end 6.4146 | Clipfrac end 0.97
+Update 63/146 | Step 129024 | Train 208 | KL end 4.7272 | Clipfrac end 0.96
+Update 64/146 | Step 131072 | Train 146 | KL end 10.6318 | Clipfrac end 0.98
+Update 65/146 | Step 133120 | Train 72 | Eval 65 | KL end 6.9042 | Clipfrac end 0.99
+Update 66/146 | Step 135168 | Train 85 | KL end 7.9685 | Clipfrac end 0.92
+Update 67/146 | Step 137216 | Train 220 | KL end 5.8694 | Clipfrac end 0.97
+Update 68/146 | Step 139264 | Train 169 | KL end 5.5493 | Clipfrac end 0.92
+Update 69/146 | Step 141312 | Train 171 | KL end 2.8922 | Clipfrac end 0.95
+Update 70/146 | Step 143360 | Train 141 | Eval 217 | KL end 78.1285 | Clipfrac end 0.99
+Update 71/146 | Step 145408 | Train 122 | KL end 5.7521 | Clipfrac end 0.94
+Update 72/146 | Step 147456 | Train 124 | KL end 5.8453 | Clipfrac end 0.97
+Update 73/146 | Step 149504 | Train 157 | KL end 3.6611 | Clipfrac end 0.95
+Update 74/146 | Step 151552 | Train 150 | KL end 8.3054 | Clipfrac end 0.97
+Update 75/146 | Step 153600 | Train 109 | Eval 236 | KL end 9.4167 | Clipfrac end 0.97
+Update 76/146 | Step 155648 | Train 168 | KL end 11.7753 | Clipfrac end 0.99
+Update 77/146 | Step 157696 | Train 119 | KL end 9.1658 | Clipfrac end 0.97
+Update 78/146 | Step 159744 | Train 89 | KL end 3.4993 | Clipfrac end 0.95
+Update 79/146 | Step 161792 | Train 144 | KL end 5.3354 | Clipfrac end 0.94
+Update 80/146 | Step 163840 | Train 156 | Eval 135 | KL end 6.3688 | Clipfrac end 0.96
+Update 81/146 | Step 165888 | Train 131 | KL end 9.5997 | Clipfrac end 0.98
+Update 82/146 | Step 167936 | Train 94 | KL end 10.2151 | Clipfrac end 0.99
+Update 83/146 | Step 169984 | Train 98 | KL end 6.5804 | Clipfrac end 0.96
+Update 84/146 | Step 172032 | Train 94 | KL end 7.9964 | Clipfrac end 0.97
+Update 85/146 | Step 174080 | Train 87 | Eval 102 | KL end 9.3612 | Clipfrac end 0.98
+Update 86/146 | Step 176128 | Train 101 | KL end 9.2592 | Clipfrac end 0.99
+Update 87/146 | Step 178176 | Train 106 | KL end 9.2875 | Clipfrac end 0.97
+Update 88/146 | Step 180224 | Train 203 | KL end 11.4783 | Clipfrac end 0.99
+Update 89/146 | Step 182272 | Train 64 | KL end 18.3715 | Clipfrac end 1.00
+Update 90/146 | Step 184320 | Train 55 | Eval 60 | KL end 7.0411 | Clipfrac end 0.99
+Update 91/146 | Step 186368 | Train 58 | KL end 8.7031 | Clipfrac end 0.97
+Update 92/146 | Step 188416 | Train 61 | KL end 11.8001 | Clipfrac end 0.98
+Update 93/146 | Step 190464 | Train 63 | KL end 13.0909 | Clipfrac end 0.97
+Update 94/146 | Step 192512 | Train 52 | KL end 13.1981 | Clipfrac end 0.98
+Update 95/146 | Step 194560 | Train 32 | Eval 14 | KL end 8.5814 | Clipfrac end 0.98
+Update 96/146 | Step 196608 | Train 14 | KL end 13.2724 | Clipfrac end 0.98
+Update 97/146 | Step 198656 | Train 12 | KL end 11.5886 | Clipfrac end 0.99
+Update 98/146 | Step 200704 | Train 10 | KL end 22.4988 | Clipfrac end 0.99
+Update 99/146 | Step 202752 | Train 6 | KL end 27.6583 | Clipfrac end 1.00
+Update 100/146 | Step 204800 | Train 6 | Eval 10 | KL end 11.1025 | Clipfrac end 0.98
+Update 101/146 | Step 206848 | Train 10 | KL end 34.0003 | Clipfrac end 1.00
+Update 102/146 | Step 208896 | Train 14 | KL end 36.5853 | Clipfrac end 1.00
+Update 103/146 | Step 210944 | Train 14 | KL end 8.2413 | Clipfrac end 0.92
+Update 104/146 | Step 212992 | Train 24 | KL end 15.4794 | Clipfrac end 0.98
+Update 105/146 | Step 215040 | Train 38 | Eval 40 | KL end 17.1066 | Clipfrac end 0.98
+Update 106/146 | Step 217088 | Train 40 | KL end 11.4007 | Clipfrac end 0.96
+Update 107/146 | Step 219136 | Train 40 | KL end 27.7550 | Clipfrac end 0.95
+Update 108/146 | Step 221184 | Train 48 | KL end 30.9556 | Clipfrac end 0.96
+Update 109/146 | Step 223232 | Train 53 | KL end 14.6066 | Clipfrac end 0.96
+Update 110/146 | Step 225280 | Train 65 | Eval 56 | KL end 17.8138 | Clipfrac end 0.97
+Traceback (most recent call last):
+  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 250, in <module>
+    train(parse_args())
+    ~~~~~^^^^^^^^^^^^^^
+  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 194, in train
+    stats.append(agent.update(data.obs[mb], data.actions[mb], data.logprobs[mb],
+                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              data.advantages[mb], data.returns[mb], optimizer))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/ppo.py", line 41, in update
+    loss.backward()
+    ~~~~~~~~~~~~~^^
+  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/_tensor.py", line 623, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/autograd/__init__.py", line 395, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/autograd/graph.py", line 1072, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+KeyboardInterrupt

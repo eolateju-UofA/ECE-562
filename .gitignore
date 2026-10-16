@@ -1,0 +1,10 @@
+ECE562-lecture*.pdf
+.venv
+*.lock
+*.zip
+*.python-version
+*.latexmk
+*.fls
+*.out
+*.toc
+*.pyc
