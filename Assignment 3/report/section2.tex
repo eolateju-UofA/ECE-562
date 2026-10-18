@@ -58,10 +58,10 @@ $k=2$, ratio & $256\pm36$     & $220\pm44$     & never & $11.9$              & $
 $k=2$, naive & $-1998\pm784$  & $-1882\pm752$  & never & $2.9\times10^{12}$  & $1.00$ & $2.3\times10^{12}$  & $-17.3$ \\
 \bottomrule
 \end{tabular}}
-\caption{Summary over 3 seeds. ``Final eval'' is the last evaluation and ``last-5 eval'' the mean of the
+\caption{\small{Summary over 3 seeds. ``Final eval'' is the last evaluation and ``last-5 eval'' the mean of the
 last five evaluations (mean $\pm$ std across seeds). ``First eval $\ge1000$'' gives the range over seeds of the
 first evaluation reaching a return of 1000. The KL, clip-fraction and entropy columns are averages over the second
-half of training ($>1.5\times10^5$ steps). Entropy is that of the 3-D Gaussian policy.}
+half of training ($>1.5\times10^5$ steps). Entropy is that of the 3-D Gaussian policy.}}
 \label{tab:summary}
 \end{table}
 
@@ -72,51 +72,75 @@ half of training ($>1.5\times10^5$ steps). Entropy is that of the 3-D Gaussian p
 
 \paragraph{Implementation.}
 \begin{itemize}[leftmargin=*]
-\item \textbf{Staleness parameter} (\code{train.py}). A new flag \code{-k/--staleness} (default 0) is added. The
-training loop keeps \code{history = collections.deque(maxlen=k+1)}. At every PPO iteration $i$:
-\begin{enumerate}[nosep]
-  \item A fresh rollout is collected with the current policy $\pi_{\theta_i}$ and appended to
-  \code{history}, so every run uses the same number of environment steps regardless of $k$.
-  \item The update uses \code{data = history[0]}. Once the deque is full this is the rollout
-  collected at iteration $i-k$ by $\pi_{\theta_{i-k}}$. Before that (iterations $i\le k$) it is the oldest
-  stored rollout, as specified. The deque discards older rollouts automatically, so exactly the
-  $k+1$ most recent rollouts are kept. With $k=0$ the code reduces exactly to the original PPO.
-\end{enumerate}
-\item \textbf{Value re-evaluation} (\code{buffer.py}). A new method \code{RolloutBuffer.refresh\_values(ac)}
-recomputes, under \code{torch.no\_grad()}, $V_\phi(s_t)$ for all 2048 stored states and the
-bootstrap value $V_\phi(s_T)$ with the \emph{current} critic. It is called right before
-\code{compute\_gae}. Observations, actions, rewards, done flags and the behavior log-probabilities
-$\log\piold(a_t\mid s_t)$ are not touched, so the denominator of $r_\theta$ is the density of the
-policy that actually generated each action.
-\item \textbf{Diagnostics.} \code{ratio\_stats(ac, data, \ldots)} is called on the selected
-stale rollout \code{data} before (\code{\_start}) and after (\code{\_end}) the 10 epochs, so all
-logged KL, ratio-percentile and clip-fraction values refer to the batch actually used.
-\item Additionally, the update is wrapped in a \code{try} block. If the loss or KL becomes non-finite,
-or the Gaussian receives NaN parameters, training stops, the rows so far are kept, and a
-\code{.unstable} file records the step. This never triggered in our runs.
+  \item \textbf{Staleness parameter} (\code{train.py}): A new flag \code{-k/--staleness}
+  (default 0) is added. The training loop keeps a history of rollouts in a deque (line \texttt{169}):
+  \begin{center}
+    \code{history = collections.deque(maxlen=k+1)}
+  \end{center}
+  At every PPO iteration $i$:
+  \begin{enumerate}[nosep]
+    \item A fresh rollout is collected with the current policy $\pi_{\theta_i}$ and appended to
+    \code{history}, so every run uses the same number of environment steps regardless of $k$.
+    \item The update uses the first rollout in the deque (line \texttt{178}):
+    \begin{center}\code{data = history[0]}\end{center}
+    Once the deque is full, this is the rollout collected at iteration $i-k$ by $\pi_{\theta_{i-k}}$.
+    Before the deque is full (iterations $i\le k$), it is the oldest stored rollout. The deque
+    discards older rollouts automatically, so exactly the $k+1$ most recent rollouts are kept.
+    With $k=0$, the code reduces exactly to the original PPO.
+  \end{enumerate}
+  \item \textbf{Value re-evaluation} (\code{buffer.py}): A new method \code{refresh\_values(ac)}
+  of the \code{RolloutBuffer} class (lines \texttt{47-55}) recomputes the state values
+  $V_\phi(s_t)$ for all 2048 stored states and the bootstrap value $V_\phi(s_T)$ with the
+  current critic. It runs under \code{torch.no\_grad()} (line \texttt{47}), so no gradients are
+  tracked through these values. The training script calls it right before \code{compute\_gae}
+  (lines \texttt{57-79}).\\
+  Observations, actions, rewards, done flags and the behavior log-probabilities
+  $\log\piold(a_t\mid s_t)$ are not touched, so the denominator of $r_\theta$ is the density of the
+  policy that actually generated each action.
+  \item \textbf{Diagnostics} (\code{train.py}): A function \code{ratio\_stats(\ldots)} (lines
+  \texttt{109-126}) is called on the selected stale rollout \code{data} before (line \texttt{185})
+  and after (line \texttt{199}) the 10 epochs, so all logged KL, ratio-percentile and
+  clip-fraction values refer to the batch actually used.
 \end{itemize}
+Additionally, the update is wrapped in a \code{try} block (lines \texttt{183-208}). If the
+loss or KL becomes non-finite, or the Gaussian receives NaN parameters, training stops,
+the rows so far are kept, and a \code{.unstable} file records the step. This never triggered
+and is therefore not discussed further.
 
 \paragraph{Why re-evaluate the values?}
-GAE is built from the TD errors
-$\delta_t = r_t + \gamma V(s_{t+1})(1-d_{t+1}) - V(s_t)$, and the critic targets are
-$R_t=\Ahat_t + V(s_t)$. The stored values are $V_{\phi_{i-k}}(s_t)$, the outputs of a critic that
-has since been trained for $k$ more iterations ($10k$ epochs). Using them would:
-(i) compute advantages against an outdated baseline. That baseline approximated $V^{\pi_{\theta_{i-k-1}}}$, i.e.\ it was
-already one iteration behind when the data were collected, so the advantage bias grows with $k$.
-(ii) Regress the current critic towards targets formed from an old critic, undoing
-$k$ iterations of value learning. The critic is not a property of the data. It is our current best
-estimate of the value function, and it costs nothing to re-query it on the stored states. So the most
-accurate available $V$ should be used.
+GAE is built from the TD errors, and the critic targets are built from the advantages:
+\begin{center}
+  $\delta_t = r_t + \gamma V(s_{t+1})(1-d_{t+1}) - V(s_t)$, \qquad $R_t=\Ahat_t + V(s_t)$.
+\end{center}
+The values stored in the rollout are $V_{\phi_{i-k}}(s_t)$, computed by the critic at the time
+the data were collected. The current critic has since been trained for $k$ more iterations
+($10k$ epochs). Using the stored values as they are would:
+\begin{itemize}
+  \item Compute advantages against an outdated baseline. That baseline approximated
+  $V^{\pi_{\theta_{i-k-1}}}$, i.e.\ it was already one iteration behind when the data were
+  collected, so the advantage bias grows with $k$.
+  \item Regress the current critic towards targets formed from an old critic, undoing $k$
+  iterations of value learning.
+\end{itemize}
+The critic is not a property of the data. It is our current best estimate of the value
+function, and it costs nothing to re-query it on the stored states. So the most accurate
+available $V$ should be used.
 
 \paragraph{Why must $\log\piold(a_t\mid s_t)$ not be recomputed?}
-The ratio $r_\theta = \pi_\theta(a\mid s)/\piold(a\mid s)$ is an importance weight. Its denominator
-must be the density under which the action was actually \emph{sampled}, namely
-$\pi_{\theta_{i-k}}$. Recomputing it with the current network would replace the denominator by
-$\pi_{\theta_i}$. That would give $r_\theta\equiv1$ at the start of every update, which falsely declares the data on-policy.
-It would remove the only correction PPO has for the action distribution (Q2a), make
-\code{kl\_start} and \code{clipfrac\_start} identically zero, and centre the clipping region on a
-policy that never generated the data. Unlike $V$, the behavior log-probability is a fixed
-fact about how the data were generated, not an estimate to be improved.
+The ratio $r_\theta = \pi_\theta(a\mid s)/\piold(a\mid s)$ is an importance weight: it
+reweights actions sampled from the old policy so that, in expectation, they behave like
+actions sampled from the current policy. For this to work, the denominator must be the
+density under which each action was actually sampled, namely $\pi_{\theta_{i-k}}$.
+Recomputing it with the current network would replace the denominator by $\pi_{\theta_i}$,
+the same as the numerator, giving $r_\theta\equiv1$ at the start of every update. This
+falsely declares the data on-policy. It would:
+\begin{itemize}[nosep]
+  \item remove the only correction PPO has for the action distribution (Q2a);
+  \item make \code{kl\_start} and \code{clipfrac\_start} identically zero;
+  \item centre the clipping region on a policy that never generated the data.
+\end{itemize}
+Unlike $V$, the behavior log-probability is a fixed fact about how the data were generated,
+not an estimate to be improved.
 
 \paragraph{Is the re-evaluated GAE on-policy for $\pi_{\theta_i}$?}
 No. Re-evaluation only changes the baseline. The states $s_t\sim d^{\pi_{\theta_{i-k}}}$, the actions
@@ -151,25 +175,29 @@ stale rollouts. The state-distribution mismatch $w_\theta(s)$ (Q2) is also untou
 
 \paragraph{Observations.}
 \begin{itemize}[leftmargin=*]
-\item \textbf{Return} (Fig.~\ref{fig:q5ret}, Table~\ref{tab:summary}). Learning is clearly delayed by staleness.
-With $k=0$ all seeds pass a return of 1000 at about $1\times10^5$ steps. With $k=2$ this happens
-between $1.1\times10^5$ and $2.25\times10^5$, and with $k=4$ only after $2.1$--$2.6\times10^5$ steps. At $k=2$ the
-final return ($2060\pm294$) catches up with $k=0$ ($2106\pm473$), but the area under the curve is much
-smaller. At $k=4$ the final return is lower ($1578\pm588$) and the curve is still rising.
-\item \textbf{\code{kl\_start} and \code{clipfrac\_start}} (Fig.~\ref{fig:q5diag}). For $k=0$ both are exactly zero,
-a sanity check that the update starts on-policy ($r_\theta\equiv1$). For $k>0$ both grow during the
-first $\sim1.5\times10^5$ steps and then plateau at $\code{kl\_start}\approx0.1$--$0.13$ and
-$\code{clipfrac\_start}\approx0.55$--$0.6$. In the second half, the 5th/95th percentiles of $r_\theta$ at the start
-of the update are $0.39/1.83$ ($k=2$) and $0.41/1.81$ ($k=4$). So well over half the batch is outside
-$[1-\epsilon,1+\epsilon]$ \emph{before a single gradient step}.
-\item \textbf{Unexpected result.} We expected $k=4$ to show a larger start-of-update mismatch than
-$k=2$, but the two plateaus overlap ($0.111$ vs.\ $0.126$). The explanation is in the \code{\_end} diagnostics:
-$\code{kl\_end}\approx0.013$ for every $k$, \emph{smaller} than \code{kl\_start}. So, measured against
-the stale behavior policy, each update moves the policy \emph{back towards} $\pi_{\theta_{i-k}}$
-(see (c)). Because every update re-anchors the policy to old data, the total drift
-between $\pi_{\theta_{i-k}}$ and $\pi_{\theta_i}$ does not grow linearly with $k$; it saturates. In addition, $k=4$ learns
-more slowly, so its policy moves less per iteration, and keeps a larger entropy ($3.6$ vs.\ $3.4$). A wider
-Gaussian produces a smaller KL for the same mean shift.
+  \item \textbf{Return} (Fig.~\ref{fig:q5ret}, Table~\ref{tab:summary}). Learning is clearly delayed by staleness.
+  With $k=0$ all seeds pass a return of 1000 at about $1\times10^5$ steps. With $k=2$ this happens
+  between $1.1\times10^5$ and $2.25\times10^5$, and with $k=4$ only after $2.1$--$2.6\times10^5$ steps. At $k=2$ the
+  final return ($2060\pm294$) catches up with $k=0$ ($2106\pm473$), but the area under the curve is much
+  smaller. At $k=4$ the final return is lower ($1578\pm588$) and the curve is still rising.
+
+  \item \textbf{\code{kl\_start} and \code{clipfrac\_start}} (Fig.~\ref{fig:q5diag}). For $k=0$ both are exactly zero,
+  a sanity check that the update starts on-policy ($r_\theta\equiv1$). For $k>0$ both grow during the
+  first $\sim1.5\times10^5$ steps and then plateau at $\code{kl\_start}\approx0.1$--$0.13$ and
+  $\code{clipfrac\_start}\approx0.55$--$0.6$. In the second half, the ratios at the start of the
+  update are far from 1: the 5th/95th percentiles of $r_\theta$ are $0.39/1.83$ ($k=2$) and
+  $0.41/1.81$ ($k=4$). So well over half the batch is outside $[1-\epsilon,1+\epsilon]$ before a
+  single gradient step.
+
+  \item \textbf{Unexpected result.} We expected $k=4$ to show a larger start-of-update mismatch than
+  $k=2$, but the two plateaus overlap ($0.111$ vs.\ $0.126$, Table~\ref{tab:summary}). The
+  explanation is in the end-of-update diagnostics: $\code{kl\_end}\approx0.013$ for every $k$,
+  \emph{smaller} than \code{kl\_start}. So, measured against the stale behavior policy, each update
+  moves the policy back towards $\pi_{\theta_{i-k}}$ (see (c)). Because every update re-anchors the
+  policy to old data, the total drift between $\pi_{\theta_{i-k}}$ and $\pi_{\theta_i}$
+  does not grow linearly with $k$; it saturates. In addition, $k=4$ learns
+  more slowly, so its policy moves less per iteration, and keeps a larger entropy ($3.6$ vs.\ $3.4$). A wider
+  Gaussian produces a smaller KL for the same mean shift.
 \end{itemize}
 
 \subsection*{(c) Analysis}
@@ -178,8 +206,9 @@ Gaussian produces a smaller KL for the same mean shift.
 In this setup, performance already degrades at $k=2$: it reaches a return of 1000 roughly $1.2$--$2.4\times$ later than $k=0$, with larger seed
 variance early on. The degradation becomes substantial at $k=4$, which ends lower and is still far from
 converged at $3\times10^5$ steps. Only $k=0$ (truly on-policy) is free of the effect. PPO tolerates a small
-lag in the sense that it does not diverge, which is clipping at work (Q6). But any lag that makes $r_\theta$
-leave the trust region at the start of the update costs sample efficiency.
+lag in the sense that it does not diverge, which is clipping at work. But any lag that makes $r_\theta$
+leave the trust region at the start of the update means more environment steps are needed to
+reach the same return, i.e.\ lower sample efficiency.
 
 \paragraph{Explanation using Q2.}
 Even with exact advantages, the correctly reweighted gradient needs the full factor
@@ -187,12 +216,14 @@ $w_\theta(s)\,r_\theta(s,a)$, where $w_\theta(s)=d^{\pi_\theta}(s)/d^{\piold}(s)
 $r_\theta$ and implicitly sets $w_\theta(s)\approx1$. The bound
 $\|d^{\pi_\theta}-d^{\piold}\|_1\le\frac{2\gamma}{1-\gamma}\E_{s\sim d^{\piold}}[D_{TV}]$ says
 this approximation is only justified while the two policies are close. With $\gamma=0.99$ the
-prefactor is $198$. With \code{kl\_start}$\,\approx0.12$, Pinsker gives
-$D_{TV}\le\sqrt{\mathrm{KL}/2}\approx0.24$ on average, so the bound on the state-distribution
-mismatch is vacuous ($\gg2$). The data are therefore drawn from a state distribution that may differ substantially
-from $d^{\pi_{\theta_i}}$, and the gradient puts weight on states the current policy no longer visits and too little
-on states it does visit. In addition, $\Ahat\approx A^{\pi_{\theta_{i-k}}}\neq A^{\pi_{\theta_i}}$ (Q3b), a second
-error that also grows with the policy gap.
+factor in front is $2\gamma/(1-\gamma)=198$, and the left-hand side can never exceed 2. So the
+bound only tells us something when the average $D_{TV}$ is below about $0.01$. With
+\code{kl\_start}$\,\approx0.12$ and more than half of the ratios outside $[0.8,1.2]$, the
+policies are far from that close, and the bound gives no guarantee that the state
+distributions are similar. The data are therefore drawn from $d^{\pi_{\theta_{i-k}}}$, which may
+differ substantially from $d^{\pi_{\theta_i}}$, and the gradient puts weight on states the
+current policy no longer visits and too little on states it does visit. In addition, $\Ahat\approx A^{\pi_{\theta_{i-k}}}\neq A^{\pi_{\theta_i}}$ (Q3b), a 
+second error that also grows with the policy gap.
 
 \paragraph{Explanation using Q4.}
 $w_\theta$ cannot be computed because $d^{\pi}=(1-\gamma)(I-\gamma P_\pi^\top)^{-1}p_0$ depends
@@ -205,41 +236,54 @@ of $\pi_{\theta_i}$ (longer hopping). The stale rollout's states are simply the 
 the current policy on, and nothing in the loss corrects for this.
 
 \paragraph{The clip fraction and the fraction of useful samples.}
-For a sample with ratio $r$ and advantage $\Ahat$, the clipped objective is
-$\min(r\Ahat,\ \mathrm{clip}(r,1-\epsilon,1+\epsilon)\Ahat)$. Its gradient is zero only when
-the minimum selects the \emph{clipped} (constant) branch. That happens exactly when
-$r>1+\epsilon$ and $\Ahat>0$, or when $r<1-\epsilon$ and $\Ahat<0$, i.e.\ when the policy has already moved
-in the direction the advantage asks for. In the other two out-of-range cases,
-$r>1+\epsilon,\ \Ahat<0$ and $r<1-\epsilon,\ \Ahat>0$, the minimum selects the unclipped branch
-$r\Ahat$, which still has gradient $\Ahat\nabla_\theta r$. Every sample with $|r-1|\le\epsilon$ (and $\Ahat\neq0$)
-contributes. So
-\begin{multline*}
-\text{fraction contributing}=(1-\code{clipfrac})\\
-+\Pr\big[|r-1|>\epsilon\ \text{and the unclipped branch is active}\big]\ \ge\ 1-\code{clipfrac}.
-\end{multline*}
-The inequality is strict whenever some out-of-range sample has the ``wrong'' sign of advantage. This
-is common with stale data, because $\Ahat$ is not correlated with the direction the policy moved
-over the last $k$ iterations (it was estimated for different data). Also, \code{clipfrac\_start} is only a
-snapshot. During the 10 epochs some samples enter and leave the clipping region.
+For a sample with ratio $r$ and advantage $\Ahat$, the clipped objective (maximised by PPO) is
+\begin{center}
+  $\min\big(r\Ahat,\ \mathrm{clip}(r, 1-\epsilon, 1+\epsilon)\Ahat\big)$.
+\end{center}
+If $r$ is within $[1-\epsilon, 1+\epsilon]$, i.e.\ $|r-1|\le\epsilon$, both branches are equal and
+the gradient is $\Ahat\nabla_\theta r$, which is non-zero whenever $\Ahat\neq0$. So every in-range
+sample contributes. If $r$ is out of range ($|r-1|>\epsilon$), there are two cases:
+\begin{itemize}[nosep]
+  \item $r>1+\epsilon,\ \Ahat>0$ or $r<1-\epsilon,\ \Ahat<0$: the $\min$ selects the
+  \emph{clipped} branch, which is constant in $\theta$, so the gradient is zero. The policy has
+  already moved in the direction the advantage asks for.
+  \item $r>1+\epsilon,\ \Ahat<0$ or $r<1-\epsilon,\ \Ahat>0$: the $\min$ selects the
+  \emph{unclipped} branch $r\Ahat$, so the gradient $\Ahat\nabla_\theta r$ is non-zero. It pushes
+  $r$ back towards 1, i.e.\ the current policy $\pi_{\theta_i}$ towards the stale policy
+  $\pi_{\theta_{i-k}}$.
+\end{itemize}
+The indicator $\mathbf{1}[|r_i - 1| > \epsilon]$ marks sample $i\in\{1,\dots,N\}$ as out of range, so
+$\code{clipfrac} = \frac{1}{N}\sum_i \mathbf{1}[|r_i - 1| > \epsilon]$ is the fraction of
+out-of-range samples, and $1-\code{clipfrac}$ is the fraction of in-range samples, all of which
+contribute a gradient. This is only a lower bound because out-of-range samples in the second case
+above also contribute a non-zero gradient but are not counted. With stale data this case is
+common, since $\Ahat$ was estimated without regard to the direction in which the policy has moved
+over the last $k$ iterations. Also, \code{clipfrac\_start} is only a snapshot: during the 10 epochs
+some samples enter and leave the clipping region.
 
 Our results show why this matters. For $k\in\{2,4\}$, $1-\code{clipfrac\_start}\approx0.43$, so
-fewer than half the samples are guaranteed to give a ``normal'' policy-gradient signal. A large share of
-the remaining non-zero gradients come from the out-of-range samples whose unclipped branch is
-active. Their gradient $\Ahat\nabla r$ with $\Ahat<0,\ r>1+\epsilon$ (or $\Ahat>0,\ r<1-\epsilon$) pushes $r$
-back towards $1$, i.e.\ \emph{towards the stale behavior policy}. The outcome is the observed drop from
-$\code{kl\_start}\approx0.12$ to $\code{kl\_end}\approx0.013$ and from $\code{clipfrac}\approx0.57$ to $0.18$. Much of
-each update is spent pulling the policy back into a trust region centred on an outdated policy,
-rather than improving the current one. This explains the slower learning in Fig.~\ref{fig:q5ret}.
+fewer than half the samples are guaranteed to give a normal policy-gradient signal. Many of the
+remaining non-zero gradients come from the second case above and pull the policy back towards the
+stale behavior policy. This matches the drop from $\code{kl\_start}\approx0.12$ to
+$\code{kl\_end}\approx0.013$ and from $\code{clipfrac}\approx0.57$ to $0.18$. Much of each update is
+spent pulling the policy back into a trust region centred on an outdated policy, rather than
+improving the current one. This explains the slower learning in Fig.~\ref{fig:q5ret}.
 
 \paragraph{Why PPO discards its data after every iteration.}
-Reusing a rollout after the policy has moved has three effects. (1) The number of samples with an
-informative clipped gradient shrinks ($1-\code{clipfrac}$ falls from $1$ to $\approx0.43$). (2) The trust
-region is centred on the wrong policy, so updates partly undo progress. (3) The uncorrected
-state-distribution mismatch $w_\theta(s)$ and advantage mismatch $A^{\pi_\theta}\neq A^{\piold}$ grow
-with the policy gap and bias the gradient. Clipping keeps the procedure stable but cannot remove
-any of these effects. Since a fresh rollout costs only 2048 environment steps and restores $r_\theta\equiv1$,
-$w_\theta\equiv1$ and $A^{\pi_\theta}=A^{\piold}$ at the start of the update, PPO stays (almost) on-policy:
-it reuses each rollout only for the 10 epochs of one iteration, where the policy is kept close by design.
+Reusing a rollout after the policy has moved has three effects:
+\begin{enumerate}
+  \item The number of samples with an informative clipped gradient shrinks ($1-\code{clipfrac}$
+  falls from 1 to $\approx0.43$).
+  \item The trust region is centred on the wrong policy, so updates partly undo progress.
+  \item The uncorrected state-distribution mismatch $w_\theta(s)$ and advantage mismatch
+  $A^{\pi_\theta}\neq A^{\piold}$ grow with the policy gap and bias the gradient.
+\end{enumerate}
+Clipping keeps the procedure stable but cannot remove any of these effects. A fresh rollout costs
+only 2048 environment steps, and it restores $r_\theta\equiv1$, $w_\theta\equiv1$ and
+$A^{\pi_\theta}=A^{\piold}$ at the start of the update. Reusing older data instead buys nothing
+(in our runs every $k$ collects the same number of steps) and adds the three effects above. So
+PPO stays (almost) on-policy: it reuses each rollout only for the 10 epochs of one iteration,
+where the policy is kept close by design.
 
 %=====================================================================
 \section*{Q6: Does the Importance Ratio Help with Stale Data?}
