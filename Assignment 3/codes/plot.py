@@ -38,7 +38,7 @@ def load(log_dir, k, loss, metric):
     return series, unstable
 
 
-def plot_metric(ax, log_dir, configs, metric):
+def plot_metric(ax, log_dir, configs, metric, logy=False):
     for k, loss, label in configs:
         series, unstable = load(log_dir, k, loss, metric)
         if not series:
@@ -46,7 +46,11 @@ def plot_metric(ax, log_dir, configs, metric):
         df = pd.DataFrame(series).sort_index()      # columns = seeds, NaN after a seed stops
         mean, std = df.mean(axis=1), df.std(axis=1, ddof=0)
         line, = ax.plot(df.index, mean, label=label)
-        ax.fill_between(df.index, mean - std, mean + std, color=line.get_color(), alpha=0.2)
+        lower = mean - std
+        if logy:
+            # mean - std can be <= 0, which a log axis cannot show; keep the band positive
+            lower = np.maximum(lower, mean * 1e-2)
+        ax.fill_between(df.index, lower, mean + std, color=line.get_color(), alpha=0.2)
         for seed, step in unstable.items():
             if step is not None:
                 ax.axvline(step, color=line.get_color(), ls=":", lw=1)
@@ -58,7 +62,7 @@ def plot_metric(ax, log_dir, configs, metric):
 
 def make_fig(log_dir, out_path, configs, metric, ylabel, title, logy=False):
     fig, ax = plt.subplots(figsize=(6, 4))
-    plot_metric(ax, log_dir, configs, metric)
+    plot_metric(ax, log_dir, configs, metric, logy)
     if logy:
         ax.set_yscale("log")
     ax.set_xlabel("environment steps")

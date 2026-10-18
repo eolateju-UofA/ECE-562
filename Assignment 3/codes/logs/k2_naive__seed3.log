@@ -1,0 +1,147 @@
+Update 1/146 | Step 2048 | Train 10 | KL end 78.7990 | Clipfrac end 0.98
+Update 2/146 | Step 4096 | Train 153 | KL end 260.6401 | Clipfrac end 0.98
+Update 3/146 | Step 6144 | Train 73 | KL end 559.6840 | Clipfrac end 0.99
+Update 4/146 | Step 8192 | Train 97 | KL end 940.3747 | Clipfrac end 1.00
+Update 5/146 | Step 10240 | Train 212 | Eval 130 | KL end 1072.2057 | Clipfrac end 1.00
+Update 6/146 | Step 12288 | Train 121 | KL end 1506.5876 | Clipfrac end 1.00
+Update 7/146 | Step 14336 | Train 110 | KL end 2245.3413 | Clipfrac end 1.00
+Update 8/146 | Step 16384 | Train 212 | KL end 3507.1035 | Clipfrac end 1.00
+Update 9/146 | Step 18432 | Train -25 | KL end 9758.2471 | Clipfrac end 1.00
+Update 10/146 | Step 20480 | Train -5 | Eval -12 | KL end 16232.5664 | Clipfrac end 1.00
+Update 11/146 | Step 22528 | Train -12 | KL end 30096.2168 | Clipfrac end 1.00
+Update 12/146 | Step 24576 | Train -16 | KL end 10825.5039 | Clipfrac end 1.00
+Update 13/146 | Step 26624 | Train -19 | KL end 9138.2568 | Clipfrac end 0.99
+Update 14/146 | Step 28672 | Train -30 | KL end 1801.2395 | Clipfrac end 0.99
+Update 15/146 | Step 30720 | Train -27 | Eval -35 | KL end 2731.3894 | Clipfrac end 0.98
+Update 16/146 | Step 32768 | Train -34 | KL end 4191.4438 | Clipfrac end 1.00
+Update 17/146 | Step 34816 | Train -44 | KL end 4689.8105 | Clipfrac end 1.00
+Update 18/146 | Step 36864 | Train -44 | KL end 4156.3203 | Clipfrac end 1.00
+Update 19/146 | Step 38912 | Train -55 | KL end 6676.8306 | Clipfrac end 1.00
+Update 20/146 | Step 40960 | Train -66 | Eval -67 | KL end 6711.4551 | Clipfrac end 0.99
+Update 21/146 | Step 43008 | Train -67 | KL end 37867.8633 | Clipfrac end 0.99
+Update 22/146 | Step 45056 | Train -72 | KL end 6396.9678 | Clipfrac end 1.00
+Update 23/146 | Step 47104 | Train -87 | KL end 7388.0078 | Clipfrac end 0.99
+Update 24/146 | Step 49152 | Train -90 | KL end 12792.0273 | Clipfrac end 0.99
+Update 25/146 | Step 51200 | Train -100 | Eval -114 | KL end 15696.5156 | Clipfrac end 1.00
+Update 26/146 | Step 53248 | Train -114 | KL end 15242.7295 | Clipfrac end 0.99
+Update 27/146 | Step 55296 | Train -117 | KL end 18213.3867 | Clipfrac end 0.99
+Update 28/146 | Step 57344 | Train -130 | KL end 25253.2773 | Clipfrac end 1.00
+Update 29/146 | Step 59392 | Train -145 | KL end 26212.1348 | Clipfrac end 0.98
+Update 30/146 | Step 61440 | Train -149 | Eval -163 | KL end 30055.2734 | Clipfrac end 0.98
+Update 31/146 | Step 63488 | Train -163 | KL end 44348.7812 | Clipfrac end 0.99
+Update 32/146 | Step 65536 | Train -180 | KL end 47070.9883 | Clipfrac end 0.97
+Update 33/146 | Step 67584 | Train -187 | KL end 57212.0703 | Clipfrac end 0.99
+Update 34/146 | Step 69632 | Train -203 | KL end 82925.5703 | Clipfrac end 0.98
+Update 35/146 | Step 71680 | Train -221 | Eval -229 | KL end 86940.3438 | Clipfrac end 0.97
+Update 36/146 | Step 73728 | Train -230 | KL end 103850.3750 | Clipfrac end 1.00
+Update 37/146 | Step 75776 | Train -246 | KL end 141568.3906 | Clipfrac end 0.99
+Update 38/146 | Step 77824 | Train -265 | KL end 139365.1094 | Clipfrac end 1.00
+Update 39/146 | Step 79872 | Train -274 | KL end 158018.4062 | Clipfrac end 1.00
+Update 40/146 | Step 81920 | Train -291 | Eval -311 | KL end 214066.7344 | Clipfrac end 0.99
+Update 41/146 | Step 83968 | Train -311 | KL end 221114.7344 | Clipfrac end 1.00
+Update 42/146 | Step 86016 | Train -320 | KL end 271727.4375 | Clipfrac end 1.00
+Update 43/146 | Step 88064 | Train -339 | KL end 382658.4688 | Clipfrac end 1.00
+Update 44/146 | Step 90112 | Train -362 | KL end 413311.2188 | Clipfrac end 1.00
+Update 45/146 | Step 92160 | Train -374 | Eval -394 | KL end 513381.2812 | Clipfrac end 1.00
+Update 46/146 | Step 94208 | Train -395 | KL end 737375.4375 | Clipfrac end 1.00
+Update 47/146 | Step 96256 | Train -419 | KL end 763547.8750 | Clipfrac end 1.00
+Update 48/146 | Step 98304 | Train -431 | KL end 893330.7500 | Clipfrac end 1.00
+Update 49/146 | Step 100352 | Train -452 | KL end 1212051.7500 | Clipfrac end 1.00
+Update 50/146 | Step 102400 | Train -475 | Eval -487 | KL end 1213960.2500 | Clipfrac end 1.00
+Update 51/146 | Step 104448 | Train -487 | KL end 1427944.3750 | Clipfrac end 1.00
+Update 52/146 | Step 106496 | Train -507 | KL end 1981865.5000 | Clipfrac end 1.00
+Update 53/146 | Step 108544 | Train -530 | KL end 1986555.5000 | Clipfrac end 1.00
+Update 54/146 | Step 110592 | Train -541 | KL end 2356481.5000 | Clipfrac end 1.00
+Update 55/146 | Step 112640 | Train -561 | Eval -583 | KL end 3212953.0000 | Clipfrac end 1.00
+Update 56/146 | Step 114688 | Train -583 | KL end 3275714.0000 | Clipfrac end 1.00
+Update 57/146 | Step 116736 | Train -593 | KL end 3825397.5000 | Clipfrac end 1.00
+Update 58/146 | Step 118784 | Train -613 | KL end 5207833.5000 | Clipfrac end 1.00
+Update 59/146 | Step 120832 | Train -634 | KL end 5327180.5000 | Clipfrac end 1.00
+Update 60/146 | Step 122880 | Train -645 | Eval -664 | KL end 6368380.0000 | Clipfrac end 1.00
+Update 61/146 | Step 124928 | Train -664 | KL end 8798686.0000 | Clipfrac end 1.00
+Update 62/146 | Step 126976 | Train -686 | KL end 9183238.0000 | Clipfrac end 1.00
+Update 63/146 | Step 129024 | Train -698 | KL end 11326878.0000 | Clipfrac end 1.00
+Update 64/146 | Step 131072 | Train -718 | KL end 15908870.0000 | Clipfrac end 1.00
+Update 65/146 | Step 133120 | Train -742 | Eval -755 | KL end 16909412.0000 | Clipfrac end 1.00
+Update 66/146 | Step 135168 | Train -755 | KL end 20844770.0000 | Clipfrac end 1.00
+Update 67/146 | Step 137216 | Train -776 | KL end 29130382.0000 | Clipfrac end 1.00
+Update 68/146 | Step 139264 | Train -800 | KL end 30073074.0000 | Clipfrac end 1.00
+Update 69/146 | Step 141312 | Train -814 | KL end 35339280.0000 | Clipfrac end 1.00
+Update 70/146 | Step 143360 | Train -835 | Eval -858 | KL end 47928192.0000 | Clipfrac end 1.00
+Update 71/146 | Step 145408 | Train -858 | KL end 47686308.0000 | Clipfrac end 1.00
+Update 72/146 | Step 147456 | Train -871 | KL end 55993568.0000 | Clipfrac end 1.00
+Update 73/146 | Step 149504 | Train -892 | KL end 75679968.0000 | Clipfrac end 1.00
+Update 74/146 | Step 151552 | Train -915 | KL end 76829688.0000 | Clipfrac end 1.00
+Update 75/146 | Step 153600 | Train -928 | Eval -950 | KL end 91483000.0000 | Clipfrac end 1.00
+Update 76/146 | Step 155648 | Train -950 | KL end 126753864.0000 | Clipfrac end 1.00
+Update 77/146 | Step 157696 | Train -974 | KL end 131137952.0000 | Clipfrac end 1.00
+Update 78/146 | Step 159744 | Train -989 | KL end 161413296.0000 | Clipfrac end 1.00
+Update 79/146 | Step 161792 | Train -1013 | KL end 230844128.0000 | Clipfrac end 1.00
+Update 80/146 | Step 163840 | Train -1040 | Eval -1059 | KL end 253677264.0000 | Clipfrac end 1.00
+Update 81/146 | Step 165888 | Train -1059 | KL end 325739776.0000 | Clipfrac end 1.00
+Update 82/146 | Step 167936 | Train -1086 | KL end 475839040.0000 | Clipfrac end 1.00
+Update 83/146 | Step 169984 | Train -1115 | KL end 501366048.0000 | Clipfrac end 1.00
+Update 84/146 | Step 172032 | Train -1134 | KL end 593739136.0000 | Clipfrac end 1.00
+Update 85/146 | Step 174080 | Train -1160 | Eval -1187 | KL end 783691840.0000 | Clipfrac end 1.00
+Update 86/146 | Step 176128 | Train -1187 | KL end 764120000.0000 | Clipfrac end 1.00
+Update 87/146 | Step 178176 | Train -1204 | KL end 872855808.0000 | Clipfrac end 1.00
+Update 88/146 | Step 180224 | Train -1229 | KL end 1153570560.0000 | Clipfrac end 1.00
+Update 89/146 | Step 182272 | Train -1254 | KL end 1142509568.0000 | Clipfrac end 1.00
+Update 90/146 | Step 184320 | Train -1271 | Eval -1295 | KL end 1335690240.0000 | Clipfrac end 1.00
+Update 91/146 | Step 186368 | Train -1295 | KL end 1807100928.0000 | Clipfrac end 1.00
+Update 92/146 | Step 188416 | Train -1321 | KL end 1826058368.0000 | Clipfrac end 1.00
+Update 93/146 | Step 190464 | Train -1339 | KL end 2193165824.0000 | Clipfrac end 1.00
+Update 94/146 | Step 192512 | Train -1364 | KL end 3023272960.0000 | Clipfrac end 1.00
+Update 95/146 | Step 194560 | Train -1392 | Eval -1412 | KL end 3147062528.0000 | Clipfrac end 1.00
+Update 96/146 | Step 196608 | Train -1412 | KL end 3928538368.0000 | Clipfrac end 1.00
+Update 97/146 | Step 198656 | Train -1442 | KL end 5766733824.0000 | Clipfrac end 1.00
+Update 98/146 | Step 200704 | Train -1475 | KL end 6428811776.0000 | Clipfrac end 1.00
+Update 99/146 | Step 202752 | Train -1501 | KL end 8551208960.0000 | Clipfrac end 1.00
+Update 100/146 | Step 204800 | Train -1536 | Eval -1571 | KL end 12556197888.0000 | Clipfrac end 1.00
+Update 101/146 | Step 206848 | Train -1571 | KL end 13018607616.0000 | Clipfrac end 1.00
+Update 102/146 | Step 208896 | Train -1597 | KL end 14870452224.0000 | Clipfrac end 1.00
+Update 103/146 | Step 210944 | Train -1628 | KL end 19033720832.0000 | Clipfrac end 1.00
+Update 104/146 | Step 212992 | Train -1660 | KL end 18574376960.0000 | Clipfrac end 1.00
+Update 105/146 | Step 215040 | Train -1683 | Eval -1714 | KL end 21167689728.0000 | Clipfrac end 1.00
+Update 106/146 | Step 217088 | Train -1713 | KL end 28093489152.0000 | Clipfrac end 1.00
+Update 107/146 | Step 219136 | Train -1745 | KL end 28346081280.0000 | Clipfrac end 1.00
+Update 108/146 | Step 221184 | Train -1769 | KL end 33886687232.0000 | Clipfrac end 1.00
+Update 109/146 | Step 223232 | Train -1801 | KL end 47420813312.0000 | Clipfrac end 1.00
+Update 110/146 | Step 225280 | Train -1835 | Eval -1863 | KL end 51175030784.0000 | Clipfrac end 1.00
+Update 111/146 | Step 227328 | Train -1863 | KL end 66338115584.0000 | Clipfrac end 1.00
+Update 112/146 | Step 229376 | Train -1900 | KL end 98352267264.0000 | Clipfrac end 1.00
+Update 113/146 | Step 231424 | Train -1938 | KL end 105533554688.0000 | Clipfrac end 1.00
+Update 114/146 | Step 233472 | Train -1966 | KL end 124476399616.0000 | Clipfrac end 1.00
+Update 115/146 | Step 235520 | Train -1999 | Eval -2032 | KL end 163019833344.0000 | Clipfrac end 1.00
+Update 116/146 | Step 237568 | Train -2032 | KL end 157469409280.0000 | Clipfrac end 1.00
+Update 117/146 | Step 239616 | Train -2055 | KL end 177611423744.0000 | Clipfrac end 1.00
+Update 118/146 | Step 241664 | Train -2083 | KL end 234893787136.0000 | Clipfrac end 1.00
+Update 119/146 | Step 243712 | Train -2112 | KL end 233502228480.0000 | Clipfrac end 1.00
+Update 120/146 | Step 245760 | Train -2131 | Eval -2157 | KL end 271932784640.0000 | Clipfrac end 1.00
+Update 121/146 | Step 247808 | Train -2157 | KL end 368105521152.0000 | Clipfrac end 1.00
+Update 122/146 | Step 249856 | Train -2183 | KL end 373503688704.0000 | Clipfrac end 1.00
+Update 123/146 | Step 251904 | Train -2201 | KL end 444172271616.0000 | Clipfrac end 1.00
+Update 124/146 | Step 253952 | Train -2225 | KL end 607738134528.0000 | Clipfrac end 1.00
+Update 125/146 | Step 256000 | Train -2250 | Eval -2266 | KL end 617748955136.0000 | Clipfrac end 1.00
+Update 126/146 | Step 258048 | Train -2266 | KL end 747067998208.0000 | Clipfrac end 1.00
+Update 127/146 | Step 260096 | Train -2289 | KL end 1029749800960.0000 | Clipfrac end 1.00
+Update 128/146 | Step 262144 | Train -2313 | KL end 1061548589056.0000 | Clipfrac end 1.00
+Update 129/146 | Step 264192 | Train -2328 | KL end 1277832986624.0000 | Clipfrac end 1.00
+Update 130/146 | Step 266240 | Train -2351 | Eval -2374 | KL end 1764283645952.0000 | Clipfrac end 1.00
+Update 131/146 | Step 268288 | Train -2374 | KL end 1817748832256.0000 | Clipfrac end 1.00
+Update 132/146 | Step 270336 | Train -2389 | KL end 2234802503680.0000 | Clipfrac end 1.00
+Update 133/146 | Step 272384 | Train -2411 | KL end 3063096016896.0000 | Clipfrac end 1.00
+Update 134/146 | Step 274432 | Train -2435 | KL end 3192882724864.0000 | Clipfrac end 1.00
+Update 135/146 | Step 276480 | Train -2450 | Eval -2472 | KL end 3888194781184.0000 | Clipfrac end 1.00
+Update 136/146 | Step 278528 | Train -2473 | KL end 5384583512064.0000 | Clipfrac end 1.00
+Update 137/146 | Step 280576 | Train -2496 | KL end 5568480149504.0000 | Clipfrac end 1.00
+Update 138/146 | Step 282624 | Train -2511 | KL end 6811475771392.0000 | Clipfrac end 1.00
+Update 139/146 | Step 284672 | Train -2534 | KL end 9418916757504.0000 | Clipfrac end 1.00
+Update 140/146 | Step 286720 | Train -2557 | Eval -2573 | KL end 9817376686080.0000 | Clipfrac end 1.00
+Update 141/146 | Step 288768 | Train -2573 | KL end 11785551740928.0000 | Clipfrac end 1.00
+Update 142/146 | Step 290816 | Train -2596 | KL end 16408598544384.0000 | Clipfrac end 1.00
+Update 143/146 | Step 292864 | Train -2620 | KL end 17200941367296.0000 | Clipfrac end 1.00
+Update 144/146 | Step 294912 | Train -2637 | KL end 21307200634880.0000 | Clipfrac end 1.00
+Update 145/146 | Step 296960 | Train -2660 | Eval -2685 | KL end 29193437970432.0000 | Clipfrac end 1.00
+Update 146/146 | Step 299008 | Train -2684 | Eval -2702 | KL end 30531827793920.0000 | Clipfrac end 1.00
+Logged metrics to runs/k2_naive__seed3.csv

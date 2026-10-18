@@ -105,36 +105,43 @@ Update 104/146 | Step 212992 | Train 798 | KL end 0.0105 | Clipfrac end 0.14
 Update 105/146 | Step 215040 | Train 844 | Eval 1118 | KL end 0.0133 | Clipfrac end 0.17
 Update 106/146 | Step 217088 | Train 683 | KL end 0.0085 | Clipfrac end 0.11
 Update 107/146 | Step 219136 | Train 775 | KL end 0.0132 | Clipfrac end 0.19
-Traceback (most recent call last):
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 250, in <module>
-    train(parse_args())
-    ~~~~~^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 172, in train
-    history.append(runner.collect(ac, args.rollout_steps))
-                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-    return func(*args, **kwargs)
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 73, in collect
-    next_obs, reward, terminated, truncated, _ = self.env.step(action.squeeze(0).numpy())
-                                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/gymnasium/wrappers/common.py", line 130, in step
-    observation, reward, terminated, truncated, info = self.env.step(action)
-                                                       ~~~~~~~~~~~~~^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/gymnasium/wrappers/common.py", line 424, in step
-    return super().step(action)
-           ~~~~~~~~~~~~^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/gymnasium/core.py", line 342, in step
-    return self.env.step(action)
-           ~~~~~~~~~~~~~^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/gymnasium/wrappers/common.py", line 303, in step
-    result = self.env.step(action)
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/gymnasium/envs/mujoco/hopper_v5.py", line 285, in step
-    self.do_simulation(action, self.frame_skip)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/gymnasium/envs/mujoco/mujoco_env.py", line 202, in do_simulation
-    self._step_mujoco_simulation(ctrl, n_frames)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/gymnasium/envs/mujoco/mujoco_env.py", line 150, in _step_mujoco_simulation
-    mujoco.mj_step(self.model, self.data, nstep=n_frames)
-    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
+Update 108/146 | Step 221184 | Train 829 | KL end 0.0143 | Clipfrac end 0.19
+Update 109/146 | Step 223232 | Train 805 | KL end 0.0095 | Clipfrac end 0.13
+Update 110/146 | Step 225280 | Train 814 | Eval 1174 | KL end 0.0181 | Clipfrac end 0.23
+Update 111/146 | Step 227328 | Train 777 | KL end 0.0161 | Clipfrac end 0.22
+Update 112/146 | Step 229376 | Train 869 | KL end 0.0432 | Clipfrac end 0.35
+Update 113/146 | Step 231424 | Train 983 | KL end 0.0147 | Clipfrac end 0.22
+Update 114/146 | Step 233472 | Train 673 | KL end 0.0090 | Clipfrac end 0.12
+Update 115/146 | Step 235520 | Train 725 | Eval 1611 | KL end 0.0157 | Clipfrac end 0.23
+Update 116/146 | Step 237568 | Train 810 | KL end 0.0198 | Clipfrac end 0.25
+Update 117/146 | Step 239616 | Train 916 | KL end 0.0094 | Clipfrac end 0.13
+Update 118/146 | Step 241664 | Train 973 | KL end 0.0159 | Clipfrac end 0.22
+Update 119/146 | Step 243712 | Train 997 | KL end 0.0138 | Clipfrac end 0.18
+Update 120/146 | Step 245760 | Train 930 | Eval 1334 | KL end 0.0095 | Clipfrac end 0.13
+Update 121/146 | Step 247808 | Train 904 | KL end 0.0106 | Clipfrac end 0.15
+Update 122/146 | Step 249856 | Train 835 | KL end 0.0088 | Clipfrac end 0.12
+Update 123/146 | Step 251904 | Train 919 | KL end 0.0100 | Clipfrac end 0.12
+Update 124/146 | Step 253952 | Train 1067 | KL end 0.0100 | Clipfrac end 0.14
+Update 125/146 | Step 256000 | Train 945 | Eval 1835 | KL end 0.0145 | Clipfrac end 0.19
+Update 126/146 | Step 258048 | Train 1059 | KL end 0.0152 | Clipfrac end 0.21
+Update 127/146 | Step 260096 | Train 988 | KL end 0.0106 | Clipfrac end 0.15
+Update 128/146 | Step 262144 | Train 980 | KL end 0.0165 | Clipfrac end 0.20
+Update 129/146 | Step 264192 | Train 969 | KL end 0.0103 | Clipfrac end 0.14
+Update 130/146 | Step 266240 | Train 944 | Eval 1516 | KL end 0.0147 | Clipfrac end 0.20
+Update 131/146 | Step 268288 | Train 1026 | KL end 0.0099 | Clipfrac end 0.13
+Update 132/146 | Step 270336 | Train 1074 | KL end 0.0194 | Clipfrac end 0.26
+Update 133/146 | Step 272384 | Train 986 | KL end 0.0118 | Clipfrac end 0.16
+Update 134/146 | Step 274432 | Train 935 | KL end 0.0173 | Clipfrac end 0.22
+Update 135/146 | Step 276480 | Train 1051 | Eval 1109 | KL end 0.0111 | Clipfrac end 0.15
+Update 136/146 | Step 278528 | Train 997 | KL end 0.0094 | Clipfrac end 0.14
+Update 137/146 | Step 280576 | Train 999 | KL end 0.0415 | Clipfrac end 0.38
+Update 138/146 | Step 282624 | Train 1087 | KL end 0.0202 | Clipfrac end 0.27
+Update 139/146 | Step 284672 | Train 865 | KL end 0.0127 | Clipfrac end 0.18
+Update 140/146 | Step 286720 | Train 906 | Eval 1190 | KL end 0.0096 | Clipfrac end 0.14
+Update 141/146 | Step 288768 | Train 1000 | KL end 0.0236 | Clipfrac end 0.29
+Update 142/146 | Step 290816 | Train 972 | KL end 0.0170 | Clipfrac end 0.24
+Update 143/146 | Step 292864 | Train 972 | KL end 0.0144 | Clipfrac end 0.20
+Update 144/146 | Step 294912 | Train 913 | KL end 0.0162 | Clipfrac end 0.21
+Update 145/146 | Step 296960 | Train 933 | Eval 1239 | KL end 0.0160 | Clipfrac end 0.22
+Update 146/146 | Step 299008 | Train 982 | Eval 1759 | KL end 0.0118 | Clipfrac end 0.17
+Logged metrics to runs/k2_clip__seed3.csv

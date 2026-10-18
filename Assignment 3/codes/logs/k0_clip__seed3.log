@@ -99,40 +99,49 @@ Update 98/146 | Step 200704 | Train 1239 | KL end 0.0208 | Clipfrac end 0.28
 Update 99/146 | Step 202752 | Train 1288 | KL end 0.0110 | Clipfrac end 0.15
 Update 100/146 | Step 204800 | Train 1137 | Eval 2980 | KL end 0.0102 | Clipfrac end 0.14
 Update 101/146 | Step 206848 | Train 961 | KL end 0.0120 | Clipfrac end 0.17
-Traceback (most recent call last):
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 250, in <module>
-    train(parse_args())
-    ~~~~~^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 194, in train
-    stats.append(agent.update(data.obs[mb], data.actions[mb], data.logprobs[mb],
-                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                              data.advantages[mb], data.returns[mb], optimizer))
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/ppo.py", line 41, in update
-    loss.backward()
-    ~~~~~~~~~~~~~^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/_tensor.py", line 623, in backward
-    torch.autograd.backward(
-    ~~~~~~~~~~~~~~~~~~~~~~~^
-        self, gradient, retain_graph, create_graph, inputs=inputs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/autograd/__init__.py", line 395, in backward
-    _engine_run_backward(
-    ~~~~~~~~~~~~~~~~~~~~^
-        tensors,
-        ^^^^^^^^
-    ...<5 lines>...
-        accumulate_grad=True,
-        ^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/autograd/graph.py", line 1072, in _engine_run_backward
-    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        t_outputs, *args, **kwargs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )  # Calls into the C++ engine to run the backward pass
-    ^
-KeyboardInterrupt
+Update 102/146 | Step 208896 | Train 1188 | KL end 0.0095 | Clipfrac end 0.13
+Update 103/146 | Step 210944 | Train 1465 | KL end 0.0203 | Clipfrac end 0.26
+Update 104/146 | Step 212992 | Train 1669 | KL end 0.0122 | Clipfrac end 0.15
+Update 105/146 | Step 215040 | Train 2014 | Eval 2796 | KL end 0.0115 | Clipfrac end 0.16
+Update 106/146 | Step 217088 | Train 2080 | KL end 0.0168 | Clipfrac end 0.21
+Update 107/146 | Step 219136 | Train 2191 | KL end 0.0128 | Clipfrac end 0.18
+Update 108/146 | Step 221184 | Train 1421 | KL end 0.0064 | Clipfrac end 0.08
+Update 109/146 | Step 223232 | Train 998 | KL end 0.0120 | Clipfrac end 0.16
+Update 110/146 | Step 225280 | Train 1018 | Eval 3233 | KL end 0.0087 | Clipfrac end 0.12
+Update 111/146 | Step 227328 | Train 1089 | KL end 0.0095 | Clipfrac end 0.12
+Update 112/146 | Step 229376 | Train 1320 | KL end 0.0105 | Clipfrac end 0.13
+Update 113/146 | Step 231424 | Train 1622 | KL end 0.0197 | Clipfrac end 0.25
+Update 114/146 | Step 233472 | Train 1658 | KL end 0.0095 | Clipfrac end 0.14
+Update 115/146 | Step 235520 | Train 1174 | Eval 3255 | KL end 0.0147 | Clipfrac end 0.22
+Update 116/146 | Step 237568 | Train 1084 | KL end 0.0067 | Clipfrac end 0.08
+Update 117/146 | Step 239616 | Train 1166 | KL end 0.0169 | Clipfrac end 0.19
+Update 118/146 | Step 241664 | Train 1155 | KL end 0.0131 | Clipfrac end 0.17
+Update 119/146 | Step 243712 | Train 1308 | KL end 0.0180 | Clipfrac end 0.23
+Update 120/146 | Step 245760 | Train 991 | Eval 2985 | KL end 0.0132 | Clipfrac end 0.19
+Update 121/146 | Step 247808 | Train 1191 | KL end 0.0180 | Clipfrac end 0.23
+Update 122/146 | Step 249856 | Train 1661 | KL end 0.0156 | Clipfrac end 0.21
+Update 123/146 | Step 251904 | Train 1901 | KL end 0.0079 | Clipfrac end 0.10
+Update 124/146 | Step 253952 | Train 1854 | KL end 0.0127 | Clipfrac end 0.18
+Update 125/146 | Step 256000 | Train 1548 | Eval 3215 | KL end 0.0192 | Clipfrac end 0.25
+Update 126/146 | Step 258048 | Train 1804 | KL end 0.0119 | Clipfrac end 0.17
+Update 127/146 | Step 260096 | Train 1833 | KL end 0.0105 | Clipfrac end 0.16
+Update 128/146 | Step 262144 | Train 1602 | KL end 0.0156 | Clipfrac end 0.22
+Update 129/146 | Step 264192 | Train 1410 | KL end 0.0263 | Clipfrac end 0.31
+Update 130/146 | Step 266240 | Train 1114 | Eval 1011 | KL end 0.0118 | Clipfrac end 0.16
+Update 131/146 | Step 268288 | Train 998 | KL end 0.0254 | Clipfrac end 0.29
+Update 132/146 | Step 270336 | Train 1131 | KL end 0.0110 | Clipfrac end 0.15
+Update 133/146 | Step 272384 | Train 858 | KL end 0.0156 | Clipfrac end 0.21
+Update 134/146 | Step 274432 | Train 1214 | KL end 0.0263 | Clipfrac end 0.29
+Update 135/146 | Step 276480 | Train 1541 | Eval 1896 | KL end 0.0125 | Clipfrac end 0.16
+Update 136/146 | Step 278528 | Train 1891 | KL end 0.0109 | Clipfrac end 0.15
+Update 137/146 | Step 280576 | Train 998 | KL end 0.0133 | Clipfrac end 0.18
+Update 138/146 | Step 282624 | Train 1309 | KL end 0.0213 | Clipfrac end 0.25
+Update 139/146 | Step 284672 | Train 1339 | KL end 0.0126 | Clipfrac end 0.17
+Update 140/146 | Step 286720 | Train 1399 | Eval 1295 | KL end 0.0096 | Clipfrac end 0.14
+Update 141/146 | Step 288768 | Train 902 | KL end 0.0143 | Clipfrac end 0.20
+Update 142/146 | Step 290816 | Train 1294 | KL end 0.0188 | Clipfrac end 0.26
+Update 143/146 | Step 292864 | Train 1660 | KL end 0.0217 | Clipfrac end 0.27
+Update 144/146 | Step 294912 | Train 1561 | KL end 0.0125 | Clipfrac end 0.15
+Update 145/146 | Step 296960 | Train 1003 | Eval 2824 | KL end 0.0074 | Clipfrac end 0.11
+Update 146/146 | Step 299008 | Train 946 | Eval 1509 | KL end 0.0153 | Clipfrac end 0.20
+Logged metrics to runs/k0_clip__seed3.csv

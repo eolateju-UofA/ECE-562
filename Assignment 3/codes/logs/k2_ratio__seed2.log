@@ -107,33 +107,41 @@ Update 106/146 | Step 217088 | Train 258 | KL end 4.4278 | Clipfrac end 0.92
 Update 107/146 | Step 219136 | Train 284 | KL end 14.6377 | Clipfrac end 0.96
 Update 108/146 | Step 221184 | Train 252 | KL end 7.7260 | Clipfrac end 0.95
 Update 109/146 | Step 223232 | Train 269 | KL end 17.4915 | Clipfrac end 0.97
-Traceback (most recent call last):
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 250, in <module>
-    train(parse_args())
-    ~~~~~^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 172, in train
-    history.append(runner.collect(ac, args.rollout_steps))
-                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-    return func(*args, **kwargs)
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 72, in collect
-    action, logprob, _, value = ac.get_action_and_value(self.obs.unsqueeze(0))
-                                ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/actor_critic.py", line 38, in get_action_and_value
-    action_mean = self.actor_mean(x)
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/nn/modules/container.py", line 259, in forward
-    input = module(input)
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/.venv/lib/python3.14/site-packages/torch/nn/modules/activation.py", line 433, in forward
-    return torch.tanh(input)
-           ~~~~~~~~~~^^^^^^^
-KeyboardInterrupt
+Update 110/146 | Step 225280 | Train 270 | Eval 286 | KL end 14.3205 | Clipfrac end 0.99
+Update 111/146 | Step 227328 | Train 318 | KL end 11.5065 | Clipfrac end 0.99
+Update 112/146 | Step 229376 | Train 295 | KL end 13.9922 | Clipfrac end 1.00
+Update 113/146 | Step 231424 | Train 285 | KL end 9.0771 | Clipfrac end 0.97
+Update 114/146 | Step 233472 | Train 320 | KL end 10.3183 | Clipfrac end 0.97
+Update 115/146 | Step 235520 | Train 295 | Eval 272 | KL end 9.0932 | Clipfrac end 0.97
+Update 116/146 | Step 237568 | Train 306 | KL end 9.7856 | Clipfrac end 0.97
+Update 117/146 | Step 239616 | Train 284 | KL end 23.0505 | Clipfrac end 1.00
+Update 118/146 | Step 241664 | Train 316 | KL end 19.7645 | Clipfrac end 0.98
+Update 119/146 | Step 243712 | Train 326 | KL end 7.2744 | Clipfrac end 0.98
+Update 120/146 | Step 245760 | Train 317 | Eval 313 | KL end 22.5535 | Clipfrac end 0.98
+Update 121/146 | Step 247808 | Train 316 | KL end 11.9480 | Clipfrac end 0.97
+Update 122/146 | Step 249856 | Train 340 | KL end 11.1296 | Clipfrac end 0.97
+Update 123/146 | Step 251904 | Train 331 | KL end 11.6545 | Clipfrac end 0.95
+Update 124/146 | Step 253952 | Train 307 | KL end 12.3941 | Clipfrac end 0.98
+Update 125/146 | Step 256000 | Train 299 | Eval 337 | KL end 5.8350 | Clipfrac end 0.97
+Update 126/146 | Step 258048 | Train 335 | KL end 3.9223 | Clipfrac end 0.92
+Update 127/146 | Step 260096 | Train 320 | KL end 9.0899 | Clipfrac end 0.96
+Update 128/146 | Step 262144 | Train 304 | KL end 25.8330 | Clipfrac end 1.00
+Update 129/146 | Step 264192 | Train 309 | KL end 9.0539 | Clipfrac end 0.98
+Update 130/146 | Step 266240 | Train 317 | Eval 308 | KL end 8.9065 | Clipfrac end 0.98
+Update 131/146 | Step 268288 | Train 305 | KL end 26.7294 | Clipfrac end 0.99
+Update 132/146 | Step 270336 | Train 300 | KL end 37.2842 | Clipfrac end 0.99
+Update 133/146 | Step 272384 | Train 284 | KL end 10.6319 | Clipfrac end 0.94
+Update 134/146 | Step 274432 | Train 297 | KL end 21.0206 | Clipfrac end 0.98
+Update 135/146 | Step 276480 | Train 294 | Eval 285 | KL end 8.5853 | Clipfrac end 0.97
+Update 136/146 | Step 278528 | Train 280 | KL end 23.8658 | Clipfrac end 0.99
+Update 137/146 | Step 280576 | Train 282 | KL end 82.7137 | Clipfrac end 0.99
+Update 138/146 | Step 282624 | Train 273 | KL end 78.9355 | Clipfrac end 1.00
+Update 139/146 | Step 284672 | Train 271 | KL end 41.4872 | Clipfrac end 1.00
+Update 140/146 | Step 286720 | Train 273 | Eval 259 | KL end 6.3264 | Clipfrac end 0.97
+Update 141/146 | Step 288768 | Train 264 | KL end 37.2721 | Clipfrac end 0.99
+Update 142/146 | Step 290816 | Train 274 | KL end 45.5695 | Clipfrac end 1.00
+Update 143/146 | Step 292864 | Train 276 | KL end 35.0778 | Clipfrac end 0.97
+Update 144/146 | Step 294912 | Train 266 | KL end 35.5269 | Clipfrac end 1.00
+Update 145/146 | Step 296960 | Train 265 | Eval 261 | KL end 29.0567 | Clipfrac end 1.00
+Update 146/146 | Step 299008 | Train 266 | Eval 265 | KL end 19.7595 | Clipfrac end 0.99
+Logged metrics to runs/k2_ratio__seed2.csv

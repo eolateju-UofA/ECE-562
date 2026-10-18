@@ -103,14 +103,45 @@ Update 102/146 | Step 208896 | Train 938 | KL end 0.0105 | Clipfrac end 0.15
 Update 103/146 | Step 210944 | Train 840 | KL end 0.0144 | Clipfrac end 0.21
 Update 104/146 | Step 212992 | Train 889 | KL end 0.0153 | Clipfrac end 0.21
 Update 105/146 | Step 215040 | Train 848 | Eval 1274 | KL end 0.0166 | Clipfrac end 0.23
-Traceback (most recent call last):
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 250, in <module>
-    train(parse_args())
-    ~~~~~^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/train.py", line 180, in train
-    data.compute_gae(args.gamma, args.gae_lambda)
-    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/petron/Alberta_PhD_Coursework/ECE 562 - DeepRL for Robotics/Assignment 3/codes/buffer.py", line 74, in compute_gae
-    self.advantages[t] = last_gae_lam
-    ~~~~~~~~~~~~~~~^^^
-KeyboardInterrupt
+Update 106/146 | Step 217088 | Train 900 | KL end 0.0186 | Clipfrac end 0.26
+Update 107/146 | Step 219136 | Train 985 | KL end 0.0142 | Clipfrac end 0.20
+Update 108/146 | Step 221184 | Train 894 | KL end 0.0158 | Clipfrac end 0.23
+Update 109/146 | Step 223232 | Train 900 | KL end 0.0154 | Clipfrac end 0.20
+Update 110/146 | Step 225280 | Train 838 | Eval 1666 | KL end 0.0208 | Clipfrac end 0.28
+Update 111/146 | Step 227328 | Train 934 | KL end 0.0270 | Clipfrac end 0.35
+Update 112/146 | Step 229376 | Train 1141 | KL end 0.0107 | Clipfrac end 0.15
+Update 113/146 | Step 231424 | Train 867 | KL end 0.0108 | Clipfrac end 0.15
+Update 114/146 | Step 233472 | Train 956 | KL end 0.0304 | Clipfrac end 0.27
+Update 115/146 | Step 235520 | Train 1063 | Eval 1184 | KL end 0.0119 | Clipfrac end 0.17
+Update 116/146 | Step 237568 | Train 1055 | KL end 0.0123 | Clipfrac end 0.18
+Update 117/146 | Step 239616 | Train 1170 | KL end 0.0094 | Clipfrac end 0.13
+Update 118/146 | Step 241664 | Train 1053 | KL end 0.0138 | Clipfrac end 0.19
+Update 119/146 | Step 243712 | Train 1018 | KL end 0.0078 | Clipfrac end 0.10
+Update 120/146 | Step 245760 | Train 770 | Eval 2237 | KL end 0.0108 | Clipfrac end 0.15
+Update 121/146 | Step 247808 | Train 878 | KL end 0.0119 | Clipfrac end 0.16
+Update 122/146 | Step 249856 | Train 779 | KL end 0.0135 | Clipfrac end 0.20
+Update 123/146 | Step 251904 | Train 1014 | KL end 0.0126 | Clipfrac end 0.18
+Update 124/146 | Step 253952 | Train 1320 | KL end 0.0134 | Clipfrac end 0.19
+Update 125/146 | Step 256000 | Train 1121 | Eval 1155 | KL end 0.0150 | Clipfrac end 0.20
+Update 126/146 | Step 258048 | Train 1098 | KL end 0.0108 | Clipfrac end 0.14
+Update 127/146 | Step 260096 | Train 1252 | KL end 0.0158 | Clipfrac end 0.22
+Update 128/146 | Step 262144 | Train 1339 | KL end 0.0140 | Clipfrac end 0.19
+Update 129/146 | Step 264192 | Train 1377 | KL end 0.0158 | Clipfrac end 0.22
+Update 130/146 | Step 266240 | Train 1210 | Eval 1954 | KL end 0.0142 | Clipfrac end 0.18
+Update 131/146 | Step 268288 | Train 1056 | KL end 0.0099 | Clipfrac end 0.14
+Update 132/146 | Step 270336 | Train 1027 | KL end 0.0142 | Clipfrac end 0.19
+Update 133/146 | Step 272384 | Train 879 | KL end 0.0116 | Clipfrac end 0.16
+Update 134/146 | Step 274432 | Train 977 | KL end 0.0154 | Clipfrac end 0.21
+Update 135/146 | Step 276480 | Train 897 | Eval 2937 | KL end 0.0098 | Clipfrac end 0.14
+Update 136/146 | Step 278528 | Train 905 | KL end 0.0127 | Clipfrac end 0.16
+Update 137/146 | Step 280576 | Train 831 | KL end 0.0173 | Clipfrac end 0.22
+Update 138/146 | Step 282624 | Train 950 | KL end 0.0205 | Clipfrac end 0.27
+Update 139/146 | Step 284672 | Train 1080 | KL end 0.0134 | Clipfrac end 0.17
+Update 140/146 | Step 286720 | Train 1122 | Eval 1261 | KL end 0.0128 | Clipfrac end 0.18
+Update 141/146 | Step 288768 | Train 1213 | KL end 0.0089 | Clipfrac end 0.13
+Update 142/146 | Step 290816 | Train 1122 | KL end 0.0183 | Clipfrac end 0.24
+Update 143/146 | Step 292864 | Train 1018 | KL end 0.0103 | Clipfrac end 0.14
+Update 144/146 | Step 294912 | Train 1109 | KL end 0.0088 | Clipfrac end 0.13
+Update 145/146 | Step 296960 | Train 1138 | Eval 1883 | KL end 0.0119 | Clipfrac end 0.16
+Update 146/146 | Step 299008 | Train 1230 | Eval 1962 | KL end 0.0179 | Clipfrac end 0.23
+Logged metrics to runs/k2_clip__seed2.csv
