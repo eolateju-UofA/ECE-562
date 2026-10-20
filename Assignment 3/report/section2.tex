@@ -24,312 +24,312 @@
 \maketitle
 
 \section*{Section 1: Theory}
+\textbf{Notation and assumptions} (as given in the assignment):
 \begin{itemize}
-  \item $\pi_{old}(a|s) > 0 \;\longrightarrow\; \pi_{\theta}(a|s) > 0$\\
-        $\pi_{old}(s) > 0 \;\longleftarrow\; d^{\pi_{\theta}}(s) > 0$
+  \item Support assumptions:
+        $\pi_\theta(a|s) > 0 \;\Rightarrow\; \piold(a|s) > 0$, \quad
+        $d^{\pi_\theta}(s) > 0 \;\Rightarrow\; d^{\piold}(s) > 0$.
 
-  \item $p_0$: Initial state distribution\\
-        $p(s'|s,a)$: transition kernel
+  \item $p_0$: initial state distribution; \quad
+        $P(s'|s,a)$: transition kernel (fixed by the environment, does not depend on the policy).
 
   \item \textbf{State-visitation distribution of a policy:}
   \[
-    d^{\pi_\theta}(s) \;=\; (1-\gamma)\sum_{t=0}^{\infty} \gamma^t \, p(S_t = s \mid s_0 \sim \rho_0, \pi)
+    d^{\pi}(s) \;=\; (1-\gamma)\sum_{t=0}^{\infty} \gamma^t \, P(s_t = s \mid s_0 \sim p_0, \pi)
   \]
 
-  \item \textbf{Policy Gradient Theorem}
+  \item \textbf{Policy Gradient Theorem:}
   \[
-    \nabla_\theta J(\theta) \;=\; \frac{1}{1-\gamma}
-    \underset{\substack{s \sim d^{\pi_\theta} \\ a \sim \pi_{\theta}}}{\mathbb{E}}
-    \!\left[\nabla_\theta \log \pi_\theta(a|s)\, \hat{A}^{\pi_\theta}(s,a)\right]
+    \nabla_\theta J(\theta) \;=\; \frac{1}{1-\gamma}\,
+    \E_{s \sim d^{\pi_\theta},\, a \sim \pi_{\theta}}
+    \!\left[\nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a)\right]
   \]
 
   \item \textbf{Per-step importance ratio:}
   \[
-    r_\theta(s|a) \;=\; \frac{\pi_\theta(a|s)}{\pi_{\theta_{\text{old}}}(a|s)}
+    r_\theta(s,a) \;=\; \frac{\pi_\theta(a|s)}{\piold(a|s)}
   \]
 \end{itemize}
 
 
 \subsection*{Q1}
 \begin{itemize}
-  \item Trajectories for a fixed length:
+  \item Trajectories of fixed length $T$:
   \[
     \tau = (s_0, a_0,\; s_1, a_1, \ldots, s_{T-1},\, a_{T-1},\, s_T)
   \]
-  \item Reward is dependent only on $(S_t, a_t, S_{t+1})$:
+  \item The reward $r_t$ depends only on $(s_t, a_t, s_{t+1})$, and the discounted return is
   \[
-    R(\tau) \;=\; \sum_{t=1}^{T} \gamma^t r_t
+    R(\tau) \;=\; \sum_{t=0}^{T-1} \gamma^t r_t
   \]
 
-  \item \textbf{Finite Horizon Objective}
+  \item \textbf{Finite-horizon objective:}
   \[
-    J_T(\theta) \;=\; \mathbb{E}_{\tau \sim \pi_\theta}\!\bigl[R(\tau)\bigr]
+    J_T(\theta) \;=\; \E_{\tau \sim \pi_\theta}\!\bigl[R(\tau)\bigr]
     \;=\; \sum_\tau p_\theta(\tau)\,R(\tau)
   \]
 
-  \item \textbf{Trajectory Probability}
+  \item \textbf{Trajectory probability:}
   \[
-    p_\theta(\tau) \;=\; p_0(S_0)\prod_{t=0}^{T-1} \pi_\theta(a_t|S_t)\,p(S_{t+1}|S_t, a_t)
+    p_\theta(\tau) \;=\; p_0(s_0)\prod_{t=0}^{T-1} \pi_\theta(a_t|s_t)\,P(s_{t+1}|s_t, a_t)
   \]
 \end{itemize}
 
 \begin{enumerate}[label=(\alph*)]
-  \item
+  \item Start from the definition and multiply and divide by $p_{\theta_{\text{old}}}(\tau)$:
   \[
-    J_T(\theta) \;=\; \sum_\tau \Bigl(
-    \Bigl(p_0(S_0) \cdot \prod_{t=0}^{T-1} \pi_\theta(a_t|S_t)\,p(S_{t+1}|S_t,a_t)\Bigr)
-    \cdot \sum_{t=0}^{T-1} \gamma^t r_t \Bigr)
+    J_T(\theta) \;=\; \sum_\tau p_\theta(\tau)\, R(\tau)
+    \;=\; \sum_{\tau:\, p_{\theta_{\text{old}}}(\tau) > 0} p_{\theta_{\text{old}}}(\tau)\,
+          \frac{p_\theta(\tau)}{p_{\theta_{\text{old}}}(\tau)}\, R(\tau)
+    \;=\; \E_{\tau \sim \piold}\!\left[\frac{p_\theta(\tau)}{p_{\theta_{\text{old}}}(\tau)}\, R(\tau)\right].
   \]
 
-  \[
-    J_T(\theta) \;=\; \sum_\tau p_\theta(\tau)\cdot R(\tau)
-    \;=\; \sum_\tau \frac{p_{\theta_{\text{old}}}(\tau)\cdot p_\theta(\tau)}{p_{\theta_{\text{old}}}(\tau)} \cdot R(\tau)
-  \]
-
-  Using the support assumption:
-  \begin{center}
-    $p_{\theta_{\text{old}}}(\tau) > 0 \;\longleftarrow\; p_{\theta_*}(\tau) > 0$
-  \end{center}
-
-  Then: 
-  \[
-    \therefore\quad
-    J_T(\theta) \;=\; \mathbb{E}_{\tau \sim \pi_{\theta_{\text{old}}}}
-    \!\left[\frac{p_\theta(\tau)\cdot R(\tau)}{p_{\theta_{\text{old}}}(\tau)}\right]
-  \]
+  \textbf{Where the support assumption is used:} dividing by $p_{\theta_{\text{old}}}(\tau)$
+  is only allowed when $p_{\theta_{\text{old}}}(\tau) > 0$, so the middle step keeps only those
+  trajectories. This drops nothing from the original sum: both trajectory probabilities share the same
+  $p_0$ and $P$, and $\pi_\theta(a_t|s_t) > 0 \Rightarrow \piold(a_t|s_t) > 0$ at every step, so
+  $p_\theta(\tau) > 0 \Rightarrow p_{\theta_{\text{old}}}(\tau) > 0$. Any trajectory with
+  $p_{\theta_{\text{old}}}(\tau) = 0$ therefore also has $p_\theta(\tau) = 0$ and contributes zero to
+  $J_T(\theta)$. The last step is just the definition of an expectation under $p_{\theta_{\text{old}}}$.
 
   \item
   \[
     \frac{p_\theta(\tau)}{p_{\theta_{\text{old}}}(\tau)}
     \;=\;
-    \frac{p_0(S_0)\displaystyle\prod_{t=0}^{T-1}\pi_\theta(a_t|S_t)\,p(S_{t+1}|S_t,a_t)}
-         {p_0(S_0)\displaystyle\prod_{t=0}^{T-1}\pi_{\theta_{\text{old}}}(a_t|S_t)\,p(S_{t+1}|S_t,a_t)}
+    \frac{p_0(s_0)\displaystyle\prod_{t=0}^{T-1}\pi_\theta(a_t|s_t)\,P(s_{t+1}|s_t,a_t)}
+         {p_0(s_0)\displaystyle\prod_{t=0}^{T-1}\piold(a_t|s_t)\,P(s_{t+1}|s_t,a_t)}
     \;=\;
-    \prod_{t=0}^{T-1}\frac{\pi_\theta(a_t|S_t)}{\pi_{\theta_{\text{old}}}(a_t|S_t)}
+    \prod_{t=0}^{T-1}\frac{\pi_\theta(a_t|s_t)}{\piold(a_t|s_t)}
   \]
 
-  \bigskip
-  The ratio above assumes that the initial state is constant regardless of policy, 
-  and the environment transition dynamics is independent of policy. In a model-free 
-  RL context, this assumption is necessary as it guarantees that appropriate 
-  modifications of current policy $\pi_{\theta}$ alone will optimize the objective 
-  function $J_T(\theta)$. Should the initial state and the transition dynamics be 
-  dependent on the policy, then some extra approach of reconciling the transition 
-  dynamics under the current policy and the behavioural policy needs to be employed, 
-  so optimizing or maximizing the current policy maximizes the objective function 
-  (the probability of taking the optimal trajectory). These assumptions make it 
-  possible to optimize our policy without knowing or modelling the transition 
-  dynamics and initial state probabilities.
+  Both policies act in the same environment and we evaluate the same trajectory $\tau$, so
+  $p_0(s_0)$ and every $P(s_{t+1}|s_t,a_t)$ appear identically in the numerator and the
+  denominator and cancel. What is left only needs the probabilities that $\pi_\theta$ and $\piold$
+  give to the actions that were actually taken, which we can always compute from the policy networks.
 
-  \item
-  Over long horizons of multiplying $r_{\theta}(s_t, a_t)$ given as:\\
-  \begin{center}
-    $r_{\theta}(s_t, a_t) = \dfrac{\pi_\theta(s_t, a_t)}{\pi_{\theta_{\text{old}}}(s_t, a_t)}$
-  \end{center}
+  This matters for model-free RL because we do not know $p_0$ or $P$. If the ratio depended on
+  them we would need a model of the environment to reweight old trajectories. Because they cancel,
+  trajectories collected by $\piold$ can be reweighted using only the policies.
+
+  \item The trajectory weight is a product of $T$ per-step ratios:
   \[
-    \prod_{t=0}^{T-1}\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|s_t)}
+    \prod_{t=0}^{T-1}\frac{\pi_\theta(a_t|s_t)}{\piold(a_t|s_t)}
     \;=\;
-    \prod_{t=0}^{T-1} r_{\theta}(s_t, a_t)
+    \prod_{t=0}^{T-1} r_{\theta}(s_t, a_t).
   \]
+  Even if each ratio is only slightly different from 1, the differences multiply over time
+  (e.g.\ $1.1^{T}$ grows very large and $0.9^{T}$ goes to zero for long $T$). For long horizons the
+  weights of most trajectories become almost zero while a few become huge, so the estimate is
+  dominated by a handful of trajectories and its variance grows very fast with $T$. This makes
+  the gradient estimate too noisy to be useful.
 
-  There is no guarantee that the trajectories (action-sequences) generated by the 
-  current policy $(\pi_\theta)$ will match that of the behavioural policy 
-  $(\pi_{\theta_{\text{old}}})$ at all points in time into the future. There is no 
-  guarantee that at some point into the future, the ratio $r_{\theta}(s_t, a_t)$ 
-  will not deviate significantly from 1, and the product across time may explode 
-  or vanish to zero creating high variance in gradient updates. PPO rather uses the 
-  single-step importqance ratio rather than the long trajectory product to minimize 
-  the variance of the gradient updates and make the ration $r_{\theta}(s_t, a_t)$ 
- more  stable.
-
+  PPO instead uses the single-step ratio $r_\theta(s_t, a_t)$ for each sample. This has much lower
+  variance, but it is an approximation: it ignores how the earlier action changes affect which
+  states are reached, i.e.\ it leaves out the state-distribution correction discussed in Q2.
+  This is acceptable only when $\pi_\theta$ stays close to $\piold$.
 \end{enumerate}
 
 
 \subsection*{Q2}
 \begin{itemize}
-  \item $s \sim d^{\pi_{\text{old}}}(s)$\\ $a \sim \pi_{\theta_{\text{old}}}(a|s)$
+  \item Samples come from the behaviour policy: $s \sim d^{\piold}(s)$, \; $a \sim \piold(a|s)$.
 
   \item Full state-action distribution ratio:
   \[
-    \frac{d^{\pi_{\theta}}(s)\;\pi_\theta(a|s)}{d^{\pi_{\theta_{\text{old}}}}(s)\;\pi_{\theta_{\text{old}}}(a|s)}
-    \;=\; w_\theta(s)\,r_{\theta}(s|a)
-    \;;\quad
-    w_\theta(s) \;=\; \frac{d^{\pi_\theta}(s)}{d^{\pi_{\theta_{\text{old}}}}(s)}
+    \frac{d^{\pi_{\theta}}(s)\;\pi_\theta(a|s)}{d^{\piold}(s)\;\piold(a|s)}
+    \;=\; w_\theta(s)\,r_{\theta}(s,a),
+    \qquad
+    w_\theta(s) \;=\; \frac{d^{\pi_\theta}(s)}{d^{\piold}(s)}
   \]
 \end{itemize}
 
 \begin{enumerate}[label=(\alph*)]
-  \item The single-step ratio $\pi_\theta(s|a)$ rather optimizes the 
-  conditional action probability $\pi_\theta(a|s)$ given the state $s$, which only 
-  accounts for how the policy changes the probability of visiting state $s$ 
-  changing the policy changes how often a state ($s_{t+1}$) is visited given another 
-  state ($s_t$). This changes the probability of visiting certain states. Using the 
-  data generated from older (stale) policy ($\pi_{\theta_{\text{old}}}$) means that 
-  $d^{\pi_{\theta}}(s)$ will be very different from $d^{\pi_{\theta_{\text{old}}}}(s)$, 
-  and the current policy might ber updated on states that are rarely visited, or not 
-  updated on states that are visited often. As such correction of the ratio 
-  $\omega_{theta}(s)$ becomes important.
+  \item Our data has distribution $d^{\piold}(s)\,\piold(a|s)$. Multiplying by $r_\theta(s,a)$ only
+  changes the action part:
+  \[
+    d^{\piold}(s)\,\piold(a|s)\cdot r_\theta(s,a) \;=\; d^{\piold}(s)\,\pi_\theta(a|s).
+  \]
+  So after reweighting, actions are distributed as under $\pi_\theta$ for each given state, but
+  the states are still weighted by how often the \emph{old} policy visited them, $d^{\piold}(s)$.
+  Turning $d^{\piold}(s)$ into $d^{\pi_\theta}(s)$ would require the extra factor $w_\theta(s)$,
+  which PPO does not use. In other words, $r_\theta$ corrects ``which action is taken in $s$'', but
+  not ``how often $s$ is visited''.
 
-  \item 
+  The older the policy that generated the data, the more $\pi_\theta$ has moved away from it.
+  Different policies take different actions, which lead to different states, so $d^{\pi_\theta}$
+  and $d^{\piold}$ drift further apart and $w_\theta(s)$ moves further from 1. Ignoring
+  $w_\theta(s)$ (setting it to 1) therefore causes a larger error: the update gives too much weight
+  to states the current policy rarely visits and too little to states it visits often.
+
+  \item
   \begin{itemize}
-    \item Total Variation Distance:
+    \item Total variation distance:
     \[
-      D_{TV}(P \| Q) \;=\; \frac{1}{2}\sum_{a} \left| p(a) - q(a) \right|
+      D_{TV}(p, q) \;=\; \frac{1}{2}\sum_{a} \left| p(a) - q(a) \right|
     \]
-    
-    \item Known Bound:
+
+    \item Known bound (Achiam et al., 2017):
     \[
-      \frac{\partial}{\partial \theta_i} D_{KL}\!\left(\pi_{\theta_{\text{old}}} \,\|\, \pi_\theta\right)
-      \;\approx\; \sum_s \left[\frac{\partial}{\partial \theta_i} \mathbb{E}\right]
-      \mathbb{E}\!\left[\pi_{\theta_{\text{old}}}(s) \cdot \pi_{\theta_{\text{old}}}(s)\right]
+      \big\| d^{\pi_\theta} - d^{\piold} \big\|_1
+      \;\le\; \frac{2\gamma}{1-\gamma}\;
+      \E_{s \sim d^{\piold}}\!\Big[ D_{TV}\big(\pi_\theta(\cdot|s),\, \piold(\cdot|s)\big) \Big]
     \]
   \end{itemize}
-  The upper bound on stat-visitation mismatch $||d^{\pi_{\theta}} - d^{\pi_{\theta_{\text{old}}}}||$, 
-  is directly proportional to $D_{TV}$ (the total variation distance between action 
-  distributions given the same distance). If $\pi_{theta} \approx \pi_{\theta_{\text{old}}}$, 
-  then $D_{TV} \approx 0$ whcih forces $d^{\pi_{\theta}}(s) = d^{\pi_{\theta_{\text{old}}}}(s)$, 
-  and $\omega_{\theta}(s)=1$, therefore limiting the overall state-visitation mismatch.
 
-  The PPO clipped surrograte objectibve also helps keep $r_{\theta}(s, a)$ within 
-  $[1-\epsilon, 1+\epsilon]$ ensuring that the online (current) policy does not change too 
-  much. This prevents large steps in action probabilities and implicitly controls the 
-  state-visitation mimatch.
+  The left side is the total state-visitation mismatch. The right side is a constant times the
+  average difference between the two action distributions, averaged over states from
+  $d^{\piold}$, which are exactly the states in our batch. If $\pi_\theta$ stays close to $\piold$
+  in every visited state, $D_{TV}$ is small, so the state-visitation mismatch is also small,
+  $d^{\pi_\theta} \approx d^{\piold}$, and $w_\theta(s) \approx 1$. In that case dropping
+  $w_\theta(s)$ only causes a small error.
 
-  The upper bound on the state-visitiation mismatch is however not a mathematical 
-  guarantee on the total variation distance over all unboserved action and states. 
-  It only guarantes a bound on all actions for a given state.
+  PPO's clipped objective
+  \[
+    \min\!\big(r_\theta(s,a)\,\Ahat(s,a),\;
+               \mathrm{clip}(r_\theta(s,a), 1-\epsilon, 1+\epsilon)\,\Ahat(s,a)\big)
+  \]
+  helps keep the update small: once a sample's ratio has moved past $1+\epsilon$ (for
+  $\Ahat > 0$) or below $1-\epsilon$ (for $\Ahat < 0$), the clipped term is selected and that sample
+  gives zero gradient. So there is no incentive to push $\pi_\theta$ further away from $\piold$ on
+  that sample, which indirectly keeps $D_{TV}$, and therefore the state mismatch, small.
+
+  \textbf{Does clipping strictly enforce a bound on $D_{TV}$? No.} Clipping only removes the
+  incentive to move further; it does not stop the ratio from leaving $[1-\epsilon, 1+\epsilon]$:
+  \begin{itemize}
+    \item it only acts on the sampled $(s,a)$ pairs, not on other actions or unvisited states;
+    \item all states share the same network parameters, so gradient steps from unclipped samples
+          still move the ratios of samples that are already clipped;
+    \item with 10 epochs of mini-batch updates, ratios can keep drifting past $1\pm\epsilon$;
+    \item in the direction the $\min$ does not clip (e.g.\ $r_\theta < 1-\epsilon$ with
+          $\Ahat > 0$), the ratio is not limited at all.
+  \end{itemize}
+  So clipping is a soft, sample-based limit, not a guarantee on $D_{TV}$.
 \end{enumerate}
 
 
 \subsection*{Q3: The Fully Corrected Off-Policy Gradient}
 \begin{enumerate}[label=(\alph*)]
-  \item Policy gradient theorem with steps:
+  \item Write the policy gradient theorem as sums:
   \[
-    \nabla_\theta J(\theta) \;=\; \frac{1}{1-\gamma}
-    \underset{s,a}{\mathbb{E}}\!\left[
-      \nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a)
-    \right]
+    \nabla_\theta J(\theta) \;=\; \frac{1}{1-\gamma}\sum_s d^{\pi_\theta}(s)
+      \sum_a \pi_\theta(a|s)\,\nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a).
   \]
-  \noindent Starting from:
-  \[
-    1-\gamma
-  \]
-  \[
-    \frac{1}{1-\gamma} \sum_{s} d^{\pi_\theta}(s)
-    \;\longrightarrow\; \text{(continuing)}
-  \]
-
+  Multiply and divide by $d^{\piold}(s)$ and by $\piold(a|s)$. This is allowed because, by the
+  support assumptions, $d^{\piold}(s) > 0$ and $\piold(a|s) > 0$ wherever the terms are non-zero:
   \begin{align*}
-    \nabla_\theta J(\theta) &= \frac{1}{1-\gamma}\sum_s d^{\pi_\theta}(s)
-      \sum_a \pi_\theta(a|s)\,\nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a) \\[4pt]
-    &= \frac{1}{1-\gamma}\sum_s d^{\pi_\theta}(s)
-      \sum_a \nabla_\theta \pi_\theta(a|s)\, A^{\pi_\theta}(s,a) \\[4pt]
-    &= \frac{1}{1-\gamma}\sum_s d^{\pi_\theta}(s)
-      \sum_a \pi_\theta(a|s)\,\nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a) \\[4pt]
-    &= \frac{1}{1-\gamma}\;\mathbb{E}_{s \sim d^{\pi_\theta},\, a \sim \pi_\theta}
-      \!\left[\nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a)\right]
-  \end{align*}
-
-  Then using importance sampling:
-  \begin{align*}
-    \nabla_\theta J(\theta) &= \frac{1}{1-\gamma}\sum_s d^{\pi_{\text{old}}}(s)
-      \frac{d^{\pi_\theta}(s)}{d^{\pi_{\text{old}}}(s)}
-      \sum_a \pi_{\theta_{\text{old}}}(a|s)
-      \frac{\pi_\theta(a|s)}{\pi_{\theta_{\text{old}}}(a|s)}
+    \nabla_\theta J(\theta) &= \frac{1}{1-\gamma}\sum_s d^{\piold}(s)
+      \frac{d^{\pi_\theta}(s)}{d^{\piold}(s)}
+      \sum_a \piold(a|s)
+      \frac{\pi_\theta(a|s)}{\piold(a|s)}\,
       \nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a) \\[4pt]
     &= \frac{1}{1-\gamma}\;
-      \mathbb{E}_{s \sim d^{\pi_{\text{old}}},\, a \sim \pi_{\theta_{\text{old}}}}
+      \E_{s \sim d^{\piold},\, a \sim \piold}
       \!\left[
-        w_\theta(s)\cdot \hat{r}_t(\theta)\cdot \nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a)
-      \right]
+        w_\theta(s)\, r_\theta(s,a)\, \nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a)
+      \right].
   \end{align*}
 
-
-  \item \textbf{Approximation PPO makes relative to (a) above:} 
+  \item \textbf{Approximations PPO makes relative to (a):}
   \begin{itemize}
-    \item PPO assumes that the probability of states visitation under the old 
-    policy (behavior policy) and the new (current/target) policy do not change significantly:
+    \item PPO drops the state correction, i.e.\ it assumes the current policy visits states about
+    as often as the behaviour policy:
     \[
-      d^{\pi_\theta}(s) \;\approx\; d^{\pi_{\theta_{\text{old}}}}(s)
+      d^{\pi_\theta}(s) \;\approx\; d^{\piold}(s)
       \quad\Rightarrow\quad
-      w_\theta(s) \;\approx\; 1
+      w_\theta(s) \;\approx\; 1.
     \]
-    PPO assumes that updates to the target/current policy does not significantly 
-    change the trajectory under the current policy from that observed with the old 
-    policy.
 
-    \item PPO firther assuems that the advantage of an action in a given state as 
-    evaluated by tge target policy is approximately the same as that evaluated by 
-    the behavior policy:
+    \item PPO uses the advantage of the behaviour policy in place of the advantage of the current
+    policy:
     \[
-      \therefore A^{\pi_{\theta}}(s, a) \approx A^{\pi_{\theta_{\text{old}}}}(s, a)
+      A^{\pi_{\theta}}(s, a) \;\approx\; A^{\piold}(s, a).
     \]
-    PPO therefore uses GAE to calculate $\hat{A}(s, a) = A^{\pi_{\theta}}(s, a) = A^{\pi_{\theta_{\text{old}}}}(s, a)$ 
-    using the roll out from the old $\pi_{\theta_{\text{old}}}$ samples.
+    $\Ahat$ is computed with GAE from rollouts of $\piold$, so it targets $A^{\piold}$, not
+    $A^{\pi_\theta}$.
   \end{itemize}
 
-  \textbf{When $\theta = \theta_{\text{old}}$:}
-  \begin{center}
-    $\pi_{\theta}(a|s) = \pi_{\theta_{\text{old}}}(a|s)$ \\
-    $r_{\theta}(s, a) = 1$ \\
-    $\omega_{\theta}(s) = \frac{d^{\pi_{\theta}}(s)}{d^{\pi_{\theta_{\text{old}}}}(s)} = 1$ \\
-    $A^{\pi_{\theta}}(s, a) = A^{\pi_{\theta_{\text{old}}}}$
-  \end{center}
-
-  Then: 
-  \begin{center}
-    $J(\theta) = \sum_{s, a} d^{\pi_{\theta}}(s) \pi_{\theta}(s, a) R(s, a)$ \\
-    $J(\theta_{\text{old}}) = \sum_{s, a} d^{\pi_{\theta_{\text{old}}}}(s) \pi_{\theta_{\text{old}}}(s, a) R(s, a)$ \\
-    $\therefore J(\theta) = J(\theta_{\text{old}})$
-  \end{center}
+  \textbf{Both are exact at $\theta = \theta_{\text{old}}$:} the two policies are the same,
+  $\pi_\theta(a|s) = \piold(a|s)$, so
+  \begin{itemize}
+    \item they visit states in the same way: $d^{\pi_\theta}(s) = d^{\piold}(s)$, hence
+          $w_\theta(s) = 1$;
+    \item they have the same value and action-value functions, hence
+          $A^{\pi_\theta}(s,a) = A^{\piold}(s,a)$.
+  \end{itemize}
+  Substituting into (a), at $\theta = \theta_{\text{old}}$,
   \[
-    \therefore\quad \nabla_\theta J(\theta)
-    \;\approx\;
-    \frac{1}{1-\gamma}
-    \mathbb{E}_{s \sim d^{\pi_{\text{old}}},\, a \sim \pi_{\theta_{\text{old}}}}
+    \nabla_\theta J(\theta)\Big|_{\theta=\theta_{\text{old}}}
+    \;=\;
+    \frac{1}{1-\gamma}\,
+    \E_{s \sim d^{\piold},\, a \sim \piold}
     \!\left[
-      \hat{r}_t(\theta)\cdot \nabla_\theta \log \pi_\theta(a|s)\, A^{\pi_\theta}(s,a)
-    \right]
+      r_\theta(s,a)\, \nabla_\theta \log \pi_\theta(a|s)\, A^{\piold}(s,a)
+    \right]_{\theta=\theta_{\text{old}}},
   \]
+  which is exactly PPO's (unclipped) gradient up to the constant factor. So PPO's gradient is
+  correct at the start of each update, and the error only appears as $\theta$ moves away from
+  $\theta_{\text{old}}$.
 
-  \textbf{Why is GAE with a learned critic still only an estimate of $A^{\pi_{\theta_{\text{old}}}}(s, a)$:}\\
-  A learned critic still use sthe smaples of $\pi_{\theta_{\text{old}}}$ in its GAE 
-  estimation 
-  \[
-    \therefore V_{\psi} = V^{\pi_{\theta_{\text{old}}}}
-  \]
-  and the advanrage function is assumed to be identical or close beacause 
-  $\pi_{\theta}(s, a) \approx \pi_{\theta_{\text{olds}}}(s, a)$:
-  \[ A^{\pi_{\theta}}(s, a) = A^{\pi_{\theta_{\text{old}}}} \]
+  \textbf{Why GAE with a learned critic is still only an estimate of $A^{\piold}(s,a)$:}
+  \begin{itemize}
+    \item The critic $V_\psi$ is a neural network fitted with a few gradient steps on a finite,
+          noisy set of returns, so $V_\psi \neq V^{\piold}$ in general. It was also partly trained
+          on data from earlier policies, so it lags behind.
+    \item GAE (with $\lambda < 1$) bootstraps from $V_\psi$ through the TD errors
+          $\delta_t = r_t + \gamma V_\psi(s_{t+1}) - V_\psi(s_t)$, so any critic error
+          becomes a bias in $\Ahat$.
+    \item Each $\Ahat(s_t,a_t)$ is computed from a single sampled continuation of the trajectory,
+          so it is noisy, and the rollout is cut at a finite length and bootstrapped at $s_T$.
+  \end{itemize}
 \end{enumerate}
 
 
 \subsection*{Q4}
 \begin{itemize}
-  \item $d^{\pi}(s') \;=\; (1 - \gamma)p_0(s') + \gamma \sum_s d^{\pi}(s) \sum_a \pi(a|s)p(s'|s, a)$
-  \item $p_{\pi}(s, s') = \sum_a \pi(a|s)p(s'|s, a)$
-  \item $d^{pi}(s') = (1 - \gamma)(I - \gamma p_{\pi}^T)^{-1}p_0$
+  \item $d^{\pi}(s') \;=\; (1 - \gamma)\,p_0(s') + \gamma \sum_s d^{\pi}(s) \sum_a \pi(a|s)\,P(s'|s, a)$
+  \item $P_{\pi}(s, s') = \sum_a \pi(a|s)\,P(s'|s, a)$
+  \item $d^{\pi} = (1 - \gamma)\,(I - \gamma P_{\pi}^\top)^{-1}p_0$
 \end{itemize}
 
 \begin{enumerate}[label=(\alph*)]
-  \item 
+  \item
   \begin{itemize}
-    \item In a model free environment, the transition dynamics ($p(s'|s, a)$) are 
-    unknown making it impossible to compute $p_{\pi}(s, s')$
-    \item Also the state-space is continuous makingit impossible to compute 
-    $(I - \gamma p_{\pi}^T)^{-1}$
+    \item \textbf{$P(s'|s,a)$ and $p_0$ are unknown.} In model-free RL we never know the transition
+    kernel or the initial state distribution, so we cannot build $P_\pi$ or evaluate the right-hand
+    side of either equation.
+    \item \textbf{The inverse $(I - \gamma P_\pi^\top)^{-1}$.} It links every state to every other
+    state through all future time steps. With continuous states, $d^\pi$ is a density and $P_\pi$
+    is not a finite matrix, so this inverse cannot be computed.
+    \item \textbf{$d^{\pi_\theta}$ is the distribution of the policy we do not have data from.}
+    Our samples come from $\piold$, so we have no samples of $d^{\pi_\theta}$ at all.
+    \item \textbf{Even $d^{\piold}(s)$ is only known through samples.} We can draw states from it
+    but cannot evaluate its density value at a given $s$, and estimating a ratio of two densities
+    in a high-dimensional continuous state space is very hard.
+    \item \textbf{$w_\theta$ depends on $\theta$.} It would need to be recomputed after every
+    gradient step.
   \end{itemize}
 
-  \item changing $\pi_\theta$ at any one state while collecting data can change 
-  the transition dynamics at that point in time and firther change the trajectroy 
-  downstream. this effectively modifies the state visitation frequencies across 
-  distinct future states. 
-  
-  Without $\omega_\theta (s)$, the state-distribution, PPO gradient weight are 
-  proportional to how $\pi_{\theta_{\text{old}}}$ visited states, creating an 
-  off-policy bias. However, the single step ration update and the upper bound 
-  on state-visitation mismatch ensures that gradient weights from $\pi_{\theta_{\text{old}}}$ 
-  are still relevant to $\pi_\theta$ at each step.
+  \item Changing $\pi_\theta$ in one state $s$ changes $P_\pi(s, \cdot)$, i.e.\ which next
+  states are reached from $s$ (the environment's $P$ itself does not change). Those next states
+  then lead to different states after them, and so on. In the recursion, $d^\pi(s')$ depends on
+  $d^\pi(s)$ for all predecessors $s$, and the inverse $(I - \gamma P_\pi^\top)^{-1}$ sums this
+  effect over all future steps. So a change in one state changes $d^{\pi_\theta}$ in many
+  downstream states.
+
+  Without $w_\theta(s)$, PPO weights states by how often the behaviour policy visited them. When
+  the data comes from a policy many PPO iterations ago, $\pi_\theta$ and $\piold$ are no longer
+  close, so (from Q2) $D_{TV}$ is larger and the bound on $\|d^{\pi_\theta} - d^{\piold}\|_1$
+  is larger, i.e.\ it no longer guarantees that the state mismatch is small. Then:
+  \begin{itemize}
+    \item states the current policy visits often may be rare in the data, and states it no longer
+          visits may dominate the batch, so $w_\theta(s)$ is far from 1 and setting it to 1 gives
+          a biased gradient;
+    \item $A^{\piold}$ is also further from $A^{\pi_\theta}$ (the second approximation of Q3);
+    \item the ratios $r_\theta$ start far from 1, so many samples are clipped and give no
+          gradient, leaving less useful signal.
+  \end{itemize}
+  The quality of the update therefore gets worse as the data gets older: the gradient becomes
+  more biased and may even point in a wrong direction.
 \end{enumerate}
 
 \section*{Section 2: Experiments and Report (Setup)}
