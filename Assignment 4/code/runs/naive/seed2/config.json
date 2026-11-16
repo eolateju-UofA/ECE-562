@@ -1,0 +1,21 @@
+{
+  "env": "Hopper-v5",
+  "seed": 2,
+  "run_name": "naive",
+  "out_dir": "runs",
+  "total_steps": 200000,
+  "learning_starts": 5000,
+  "buffer_capacity": 1000000,
+  "batch_size": 256,
+  "gamma": 0.99,
+  "tau": 0.005,
+  "actor_lr": 0.0003,
+  "critic_lr": 0.0003,
+  "alpha_lr": 0.0003,
+  "hidden": 256,
+  "eval_every": 5000,
+  "eval_episodes": 5,
+  "threads": 1,
+  "target_action": "current",
+  "actor_loss": "naive"
+}

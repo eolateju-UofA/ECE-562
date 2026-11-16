@@ -1,0 +1,12 @@
+[naive seed1] step    5000  eval     20.7  alpha nan    0.1 min
+[naive seed1] step   10000  eval      4.9  alpha 5.881    6.0 min
+[naive seed1] step   15000  eval      4.9  alpha 51.030   12.0 min
+[naive seed1] step   20000  eval      4.9  alpha 328.345   17.8 min
+[naive seed1] step   25000  eval      4.9  alpha 1881.534   24.4 min
+[naive seed1] step   30000  eval      4.9  alpha 10147.341   30.9 min
+[naive seed1] step   35000  eval      4.9  alpha 52738.303   37.4 min
+[naive seed1] step   40000  eval      4.9  alpha 267387.459   44.0 min
+[naive seed1] step   45000  eval      4.9  alpha 1331599.228   50.5 min
+[naive seed1] step   50000  eval      4.9  alpha 6454288.708   57.4 min
+[naive seed1] step   55000  eval      4.9  alpha 30809214.076   64.0 min
+[naive seed1] non-finite update statistics at step 55825; stopping
