@@ -64,7 +64,11 @@ class Actor(nn.Module):
         # (c) logp_u = sum_i log N(u_i | mu_i, sigma_i)                       shape (batch,)
         #     logp_a = logp_u - sum_i log(1 - tanh(u_i)^2)                    shape (batch,)
         #     Use tanh_log_det_jacobian(u) for the second term (it is numerically stable).
-        raise NotImplementedError("TODO 1: Actor.sample")
+        dist = Normal(mu, log_std.exp())
+        u = dist.rsample()
+        a = torch.tanh(u)
+        logp_u = dist.log_prob(u).sum(dim=-1)
+        logp_a = logp_u - tanh_log_det_jacobian(u)
         # ======================================================
 
         return {"a": a, "u": u, "logp_a": logp_a, "logp_u": logp_u,

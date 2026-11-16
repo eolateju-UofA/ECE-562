@@ -12,6 +12,13 @@ Assignment 3 rollout buffer stored log pi_theta_old):
     step         environment step at which the transition was collected
     is_random    1 if the action came from the uniform warm-up policy
 
+Added for Q5(a) (the "replay" critic target), filled in by set_next() once the agent
+picks the action at s' in the same episode:
+    next_act         a'_b, the action the behavior policy took at s'           (act_dim,)
+    next_beh_logp_a  log pi_b(a'_b | s'), squashed density (WITH the tanh term) scalar
+    has_next         1 if next_act is available, 0 otherwise (episode ended, or the
+                     next step has not been collected yet)
+
 For warm-up transitions the behavior is Uniform([-1, 1]^m) in action space, so
 beh_mu / beh_log_std are meaningless placeholders (zeros) and beh_logp_u is the
 exact pre-tanh density of the uniform behavior:
@@ -44,6 +51,9 @@ class ReplayBuffer:
         self.beh_logp_u = np.zeros((self.capacity,), dtype=f32)
         self.step = np.zeros((self.capacity,), dtype=np.int64)
         self.is_random = np.zeros((self.capacity,), dtype=f32)
+        self.next_act = np.zeros((self.capacity, act_dim), dtype=f32)
+        self.next_beh_logp_a = np.zeros((self.capacity,), dtype=f32)
+        self.has_next = np.zeros((self.capacity,), dtype=f32)
 
     def add(self, obs, act, pre_tanh, rew, next_obs, terminated,
             beh_mu, beh_log_std, beh_logp_u, step, is_random):
@@ -59,8 +69,15 @@ class ReplayBuffer:
         self.beh_logp_u[i] = beh_logp_u
         self.step[i] = step
         self.is_random[i] = float(is_random)
+        self.has_next[i] = 0.0
         self.ptr = (self.ptr + 1) % self.capacity
         self.size = min(self.size + 1, self.capacity)
+
+    def set_next(self, i: int, next_act, next_beh_logp_a: float):
+        """Record the behavior policy's action at s' for the transition stored at position i."""
+        self.next_act[i] = next_act
+        self.next_beh_logp_a[i] = next_beh_logp_a
+        self.has_next[i] = 1.0
 
     def sample_idx(self, idx: np.ndarray) -> dict:
         """Gather the transitions at buffer positions idx into a dict of tensors."""
@@ -73,6 +90,8 @@ class ReplayBuffer:
             "beh_mu": t(self.beh_mu), "beh_log_std": t(self.beh_log_std),
             "beh_logp_u": t(self.beh_logp_u),
             "step": t(self.step), "is_random": t(self.is_random),
+            "next_act": t(self.next_act), "next_beh_logp_a": t(self.next_beh_logp_a),
+            "has_next": t(self.has_next),
         }
 
     def sample(self, batch_size: int, rng: np.random.Generator) -> dict:

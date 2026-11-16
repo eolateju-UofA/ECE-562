@@ -2,6 +2,9 @@
 
     python train.py --seed 1                      # default SAC
     python train.py --seed 1 --run-name base      # results go to runs/base/seed1/
+    python train.py --seed 1 --run-name replay --target-action replay     # Q5(a)
+    python train.py --seed 1 --run-name naive  --actor-loss naive         # Q5(b)
+    python train.py --seed 1 --run-name clip   --actor-loss clip          # Q5(b)
 
 Every --eval-every environment steps, one row is appended to
 runs/<run-name>/seed<seed>/progress.csv containing the deterministic evaluation
@@ -44,6 +47,9 @@ def parse_args():
     p.add_argument("--eval-every", type=int, default=5_000)
     p.add_argument("--eval-episodes", type=int, default=5)
     p.add_argument("--threads", type=int, default=1)
+    # Section 2 options. Defaults give standard SAC.
+    p.add_argument("--target-action", choices=["current", "replay"], default="current")
+    p.add_argument("--actor-loss", choices=["reparam", "naive", "clip"], default="reparam")
     return p.parse_args()
 
 
@@ -60,6 +66,11 @@ def evaluate(env, actor, episodes, device):
             done = terminated or truncated
         returns.append(ep_ret)
     return float(np.mean(returns)), float(np.std(returns))
+
+
+def tanh_log_det_jacobian_np(u):
+    """NumPy version of networks.tanh_log_det_jacobian for a single action."""
+    return float((2.0 * (np.log(2.0) - u - np.logaddexp(0.0, -2.0 * u))).sum())
 
 
 def main():
@@ -85,13 +96,16 @@ def main():
 
     agent = SACAgent(obs_dim, act_dim, hidden=args.hidden, gamma=args.gamma, tau=args.tau,
                      actor_lr=args.actor_lr, critic_lr=args.critic_lr,
-                     alpha_lr=args.alpha_lr, device=device)
+                     alpha_lr=args.alpha_lr, device=device,
+                     target_action=args.target_action, actor_loss_type=args.actor_loss)
     buffer = ReplayBuffer(obs_dim, act_dim, args.buffer_capacity, device=device)
 
     rows, stats_acc = [], defaultdict(list)
     ep_returns, ep_ret, episodes = [], 0.0, 0
     obs, _ = env.reset(seed=args.seed)
     t0 = time.time()
+    prev_idx = None   # buffer position of the previous transition in the current episode
+    diverged = False
 
     for step in range(1, args.total_steps + 1):
         # ---------------- act ----------------
@@ -112,11 +126,17 @@ def main():
             beh_logp_u = out["logp_u"][0].item()
             is_random = 0
 
+        # Q5(a): the action just picked is a'_b for the previous transition of this episode.
+        if prev_idx is not None:
+            buffer.set_next(prev_idx, a, beh_logp_u - tanh_log_det_jacobian_np(u))
+
         next_obs, r, terminated, truncated, _ = env.step(a)
         ep_ret += r
         # Only true termination stops bootstrapping. Time-limit truncation does not.
+        idx = buffer.ptr
         buffer.add(obs, a, u, r, next_obs, terminated,
                    beh_mu, beh_log_std, beh_logp_u, step, is_random)
+        prev_idx = None if (terminated or truncated) else idx
         obs = next_obs
         if terminated or truncated:
             ep_returns.append(ep_ret)
@@ -127,10 +147,22 @@ def main():
         # ---------------- learn ----------------
         if step > args.learning_starts:
             batch = buffer.sample(args.batch_size, rng)
-            for k, v in agent.update(batch).items():
+            batch["cur_step"] = step
+            stats = agent.update(batch)
+            for k, v in stats.items():
                 stats_acc[k].append(v)
+            if not all(np.isfinite(v) for v in stats.values()):
+                diverged = True
 
         # ---------------- evaluate & log ----------------
+        if diverged:
+            # The objective produced non-finite values. Keep the rows logged so far and stop.
+            msg = f"[{args.run_name} seed{args.seed}] non-finite update statistics at step {step}; stopping"
+            print(msg, flush=True)
+            with open(os.path.join(run_dir, "diverged.txt"), "w") as f:
+                f.write(f"{step}\n" + json.dumps({k: float(v) for k, v in stats.items()}) + "\n")
+            break
+
         if step % args.eval_every == 0:
             ev_mean, ev_std = evaluate(eval_env, agent.actor, args.eval_episodes, device)
             row = {"step": step, "eval_return_mean": ev_mean, "eval_return_std": ev_std,

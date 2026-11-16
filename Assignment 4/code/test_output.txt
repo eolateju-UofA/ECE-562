@@ -1,0 +1,9 @@
+PASS  TODO 1  Actor.sample
+PASS  TODO 2  critic_loss (terminal)
+PASS  TODO 2  critic_loss (bootstrap)
+PASS  TODO 3  actor_loss
+PASS  TODO 4a alpha_loss
+PASS  TODO 4b soft_update
+PASS          full update step
+
+7/7 tests passed
